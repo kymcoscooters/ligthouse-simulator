@@ -1,0 +1,14 @@
+{
+  "appId": "io.ionic.starter",
+  "appName": "lighthouse-simulator",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  },
+  "cordova": {},
+  "linuxAndroidStudioPath": "/home/robban/Downloads/android-2/android-studio/bin/studio.sh"
+}
