@@ -1,0 +1,7 @@
+{
+  "name": "lighthouse-simulator",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

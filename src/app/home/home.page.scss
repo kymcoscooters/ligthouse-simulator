@@ -1,0 +1,62 @@
+#container {
+  text-align: center;
+  height: 100%;
+  background-color: #f5f5f5;
+}
+
+#container .title {
+  font-size: 20px;
+  line-height: 26px;
+  padding: 20px 0;
+
+  color: #424242;
+}
+
+#container p {
+  font-size: 16px;
+  line-height: 22px;
+
+  color: #8c8c8c;
+
+  margin: 0;
+}
+
+#container a {
+  text-decoration: none;
+}
+
+.Red {
+  background-color: red !important;
+}
+
+.black {
+  background-color: black !important;
+  --background: black !important;
+}
+
+.Green {
+  background-color: #0bf446 !important;
+}
+
+.White {
+  background-color: white !important;
+}
+
+.hidden {
+  visibility: hidden !important;
+}
+
+ion-item {
+  max-width: 350px;
+  margin: auto;
+}
+
+.abbreviation {
+  float: left;
+  margin-left: 50px;
+}
+
+.buttons {
+  float: right;
+  margin-right: 50px;
+}

@@ -1,0 +1,51 @@
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Blank2</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div id="container" #content>
+    <div class="title">Lighthouse Simulator</div>
+    <p>Choose light mode, edit the settings and press start</p>
+    <!-- <ion-item color="medium">
+      <ion-label >Color mode</ion-label>
+      <ion-select  interface="action-sheet" value="{{colorModes[0]}}" (ionChange)="onColorModeChange($event)">
+        <ion-select-option *ngFor="let colorMode of colorModes">{{colorMode}}</ion-select-option>
+      </ion-select>
+    </ion-item> -->
+    <lsim-color-mode (colorChange)="setModeAbbreviation()"></lsim-color-mode>
+    <ion-item>
+      <ion-label>Light mode</ion-label>
+      <ion-select interface="action-sheet" value="{{lightModes[0]}}" (ionChange)="onLightModeChange($event)">
+        <ion-select-option *ngFor="let lightMode of lightModes">{{lightMode}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <div id="optionsContainer">
+      <div #periodLengthContainer class="hidden">
+        <ion-item>
+          <ion-range min="2" max="60" (ionChange)="onPeriodLengthChange($event)" #range></ion-range>
+        </ion-item>
+        <div>Period length: {{periodLength}}s</div>
+      </div>
+      <div #flashingModeContainer class="hidden">
+        <ion-item>
+          <ion-label>Flashing mode</ion-label>
+          <ion-select interface="action-sheet" value="{{flashingModes[0]}}" (ionChange)="onFlashingModeChange($event)">
+            <ion-select-option *ngFor="let flashingMode of flashingModes">{{flashingMode}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar color="light" #footerBar>
+    <p class="abbreviation">{{modeAbbreviation}}</p>
+    <div class="buttons">
+      <ion-button color="medium" *ngIf="!running" (click)="start()">Turn on!</ion-button>
+      <ion-button color="medium" *ngIf="running" id="cancel" (click)="cancel()">Turn off!</ion-button>
+    </div>
+  </ion-toolbar>
+</ion-footer>
