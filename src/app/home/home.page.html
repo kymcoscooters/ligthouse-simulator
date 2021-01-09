@@ -8,33 +8,20 @@
   <div id="container" #content>
     <div class="title">Lighthouse Simulator</div>
     <p>Choose light mode, edit the settings and press start</p>
-    <!-- <ion-item color="medium">
-      <ion-label >Color mode</ion-label>
-      <ion-select  interface="action-sheet" value="{{colorModes[0]}}" (ionChange)="onColorModeChange($event)">
-        <ion-select-option *ngFor="let colorMode of colorModes">{{colorMode}}</ion-select-option>
-      </ion-select>
-    </ion-item> -->
     <lsim-color-mode (colorChange)="setModeAbbreviation()"></lsim-color-mode>
-    <ion-item>
-      <ion-label>Light mode</ion-label>
-      <ion-select interface="action-sheet" value="{{lightModes[0]}}" (ionChange)="onLightModeChange($event)">
-        <ion-select-option *ngFor="let lightMode of lightModes">{{lightMode}}</ion-select-option>
-      </ion-select>
-    </ion-item>
+    <lsim-light-mode
+      (lightModeChange)="setModeAbbreviation()"
+      (periodLengthChange)="setModeAbbreviation()"
+      (turnOn)="turnOn()"
+      (turnOff)="turnOff()"
+      (intervals)="setIntervals($event)"
+    ></lsim-light-mode>
     <div id="optionsContainer">
       <div #periodLengthContainer class="hidden">
         <ion-item>
           <ion-range min="2" max="60" (ionChange)="onPeriodLengthChange($event)" #range></ion-range>
         </ion-item>
         <div>Period length: {{periodLength}}s</div>
-      </div>
-      <div #flashingModeContainer class="hidden">
-        <ion-item>
-          <ion-label>Flashing mode</ion-label>
-          <ion-select interface="action-sheet" value="{{flashingModes[0]}}" (ionChange)="onFlashingModeChange($event)">
-            <ion-select-option *ngFor="let flashingMode of flashingModes">{{flashingMode}}</ion-select-option>
-          </ion-select>
-        </ion-item>
       </div>
     </div>
   </div>

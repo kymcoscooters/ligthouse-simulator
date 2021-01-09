@@ -4,6 +4,8 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { HomePage } from './home.page';
 import { ColorModeComponent } from '../color-mode/color-mode.component';
+import { LightModeComponent } from '../light-mode/light-mode.component';
+import { FlashingComponent } from '../flashing/flashing.component';
 
 import { HomePageRoutingModule } from './home-routing.module';
 
@@ -17,7 +19,9 @@ import { HomePageRoutingModule } from './home-routing.module';
   ],
   declarations: [
     HomePage,
-    ColorModeComponent
+    ColorModeComponent,
+    LightModeComponent,
+    FlashingComponent
   ]
 })
 export class HomePageModule {}

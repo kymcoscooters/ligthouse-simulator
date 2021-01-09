@@ -1,0 +1,20 @@
+<ion-item color="medium">
+  <ion-label>Light mode</ion-label>
+  <ion-select interface="action-sheet" value="{{lightModes[0]}}" (ionChange)="onLightModeChange($event)">
+    <ion-select-option *ngFor="let lightMode of lightModes">{{lightMode}}</ion-select-option>
+  </ion-select>
+</ion-item>
+<ion-item color="medium" #periodLengthContainer *ngIf="isPeriodLengthVisible()">
+  <ion-range color="light" min="2" max="60" (ionChange)="onPeriodLengthChange($event)" #periodLengthSlider>
+    <ion-label slot="start">Period length</ion-label>
+    <ion-label slot="end">{{periodLength}}s</ion-label>
+  </ion-range>
+</ion-item>
+<lsim-flashing
+  *ngIf="selectedLightMode == 'Flashing'"
+  (turnOn)="emitTurnOn()"
+  (turnOff)="emitTurnOff()"
+  (intervals)="setIntervals($event)"
+  (periodLengthMin)="setPeriodLengthMin($event)"
+  [periodLength]="periodLength"
+></lsim-flashing>

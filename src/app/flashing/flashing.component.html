@@ -1,0 +1,6 @@
+<ion-item color="medium">
+  <ion-label>Flashing mode</ion-label>
+  <ion-select interface="action-sheet" value="{{flashingModes[0]}}" (ionChange)="onFlashingModeChange($event)">
+    <ion-select-option *ngFor="let flashingMode of flashingModes">{{flashingMode}}</ion-select-option>
+  </ion-select>
+</ion-item>

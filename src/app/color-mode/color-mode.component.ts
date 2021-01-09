@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Platform } from '@ionic/angular';
 
 @Component({
@@ -8,7 +8,7 @@ import { Platform } from '@ionic/angular';
 })
 export class ColorModeComponent implements OnInit {
   colorModes: String[]
-  @Input() selectedColorMode: String
+  selectedColorMode: String
   @Output() colorChange = new EventEmitter<String>();
 
 
