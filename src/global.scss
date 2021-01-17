@@ -26,6 +26,24 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 ion-item {
-    max-width: 350px;
+    max-width: 360px;
     margin: 10px auto;
+}
+
+ion-select {
+    max-width: unset !important;
+}
+
+@media (max-width: 400px) {
+    body {
+        font-size: 12px !important;
+    }
+
+    ion-item, ion-label {
+        font-size: 12px !important;
+    }
+
+    ion-item {
+        max-width: calc(100% - 20px);
+    }
 }

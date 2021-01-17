@@ -20,9 +20,6 @@ export class HomePage {
   modeAbbreviation = 'F W'
 
   @ViewChild('content') content: ElementRef
-  @ViewChild('range') range
-  @ViewChild('periodLengthContainer') periodLengthContainer
-  @ViewChild('flashingModeContainer') flashingModeContainer
   @ViewChild('footerBar') footerBar
   @ViewChild(ColorModeComponent) colorMode
   @ViewChild(LightModeComponent) lightMode
@@ -31,14 +28,12 @@ export class HomePage {
 
   start() {
     this.cancel = this.startFlashing().cancel
-    console.log(this.colorMode.selectedColorMode)
   }
 
   startFlashing() {
     let finished = false
     let cancel = () => {
       finished = true
-      console.log('canceling')
     }
 
     const promise = new Promise<void>((resolve, reject) => {
@@ -57,8 +52,6 @@ export class HomePage {
         if (finished) {
           return
         }
-
-        console.log('stopping')
         this.clearIntervals()
         this.turnOff()
         this.content.nativeElement.classList.remove('black')
@@ -76,7 +69,6 @@ export class HomePage {
       return
     })
     .catch((err) => {
-      console.log('rejectedd')
       finished = true
       return err
     })
@@ -127,28 +119,6 @@ export class HomePage {
   }
 
   setModeAbbreviation() {
-    const getColorCharacter = () => {
-      switch (this.colorMode.selectedColorMode) {
-        case 'LED':
-        case 'White':
-          return 'W'
-        case 'Red':
-          return 'R'
-        case 'Green':
-          return 'G'
-      }
-    }
-
-    switch (this.lightMode.selectedLightMode) {
-      case 'Fixed':
-        this.modeAbbreviation = `F ${getColorCharacter()}`
-        break;
-      case 'Flashing':
-        this.modeAbbreviation = `Fl ${getColorCharacter()} ${this.lightMode.periodLength}s`
-        break;
-      case 'Isophase':
-        this.modeAbbreviation = `Iso ${getColorCharacter()} ${this.lightMode.periodLength}s`
-        break;
-    }
+    this.modeAbbreviation = this.lightMode.getModeAbbreviation(this.colorMode.selectedColorMode)
   }
 }

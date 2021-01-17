@@ -11,7 +11,6 @@ export class LightModeComponent implements OnInit {
   selectedLightMode: String
   periodLength: number
 
-  @ViewChild('periodLengthContainer') periodLengthContainer
   @ViewChild('periodLengthSlider') periodLengthSlider
   @ViewChild(FlashingComponent) flashingComponent
 
@@ -20,7 +19,7 @@ export class LightModeComponent implements OnInit {
   @Output() turnOn = new EventEmitter()
   @Output() turnOff = new EventEmitter()
   @Output() intervals = new EventEmitter()
-
+  @Output() settingsChanged = new EventEmitter()
 
   constructor() {
     this.lightModes = ['Fixed', 'Flashing', 'Isophase']
@@ -52,6 +51,10 @@ export class LightModeComponent implements OnInit {
     this.intervals.emit(intervals)
   }
 
+  onSettingsChanged() {
+    this.settingsChanged.emit()
+  }
+
   start() {
     switch (this.selectedLightMode) {
       case 'Fixed':
@@ -68,10 +71,13 @@ export class LightModeComponent implements OnInit {
 
   isophase() {
     const period = this.periodLength * 1000
+
     this.emitTurnOn()
+
     const on = setInterval(() => {
       this.emitTurnOn()
     }, period)
+
     setTimeout(() => {
       this.emitTurnOff()
       const off = setInterval(() => {
@@ -97,5 +103,28 @@ export class LightModeComponent implements OnInit {
       this.periodLength = min
     }
     this.periodLengthSlider.min = min
+  }
+
+  getModeAbbreviation(color) {
+    const getColorCharacter = () => {
+      switch (color) {
+        case 'LED':
+        case 'White':
+          return 'W'
+        case 'Red':
+          return 'R'
+        case 'Green':
+          return 'G'
+      }
+    }
+
+    switch (this.selectedLightMode) {
+      case 'Fixed':
+        return `F ${getColorCharacter()}`
+      case 'Flashing':
+        return this.flashingComponent?.getModeAbbreviation(color, this.periodLength)
+      case 'Isophase':
+        return `Iso ${getColorCharacter()} ${this.periodLength}s`
+    }
   }
 }

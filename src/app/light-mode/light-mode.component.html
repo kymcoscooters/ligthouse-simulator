@@ -5,7 +5,7 @@
   </ion-select>
 </ion-item>
 <ion-item color="medium" #periodLengthContainer *ngIf="isPeriodLengthVisible()">
-  <ion-range color="light" min="2" max="60" (ionChange)="onPeriodLengthChange($event)" #periodLengthSlider>
+  <ion-range color="light" min="2" max="60" step="1" [(ngModel)]="periodLength" (ionChange)="onPeriodLengthChange($event)" #periodLengthSlider>
     <ion-label slot="start">Period length</ion-label>
     <ion-label slot="end">{{periodLength}}s</ion-label>
   </ion-range>
@@ -15,6 +15,7 @@
   (turnOn)="emitTurnOn()"
   (turnOff)="emitTurnOff()"
   (intervals)="setIntervals($event)"
+  (settingsChanged)="onSettingsChanged()"
   (periodLengthMin)="setPeriodLengthMin($event)"
   [periodLength]="periodLength"
 ></lsim-flashing>

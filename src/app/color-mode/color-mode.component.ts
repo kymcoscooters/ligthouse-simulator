@@ -9,8 +9,8 @@ import { Platform } from '@ionic/angular';
 export class ColorModeComponent implements OnInit {
   colorModes: String[]
   selectedColorMode: String
-  @Output() colorChange = new EventEmitter<String>();
 
+  @Output() colorChange = new EventEmitter<String>();
 
   constructor(
     private platform: Platform
@@ -29,7 +29,5 @@ export class ColorModeComponent implements OnInit {
   onColorModeChange(event) {
     this.selectedColorMode = event.detail.value
     this.colorChange.emit(event.detail.value)
-    //this.modeAbbreviation = this.setModeAbbreviation()
   }
-
 }

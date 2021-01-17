@@ -4,3 +4,15 @@
     <ion-select-option *ngFor="let flashingMode of flashingModes">{{flashingMode}}</ion-select-option>
   </ion-select>
 </ion-item>
+<ion-item color="medium" #groupSizeContainer *ngIf="isGroupSizeVisible()">
+  <ion-range color="light" min="2" max="10" step="1" [(ngModel)]="groupSize" (ionChange)="onGroupSizeChange($event)" #groupSizeSlider>
+    <ion-label slot="start">Group size</ion-label>
+    <ion-label slot="end">{{groupSize}}</ion-label>
+  </ion-range>
+</ion-item>
+<ion-item color="medium" #compositeGroupSizeContainer *ngIf="selectedFlashingMode == 'Composite group-flashing'">
+  <ion-range color="light" min="1" max="10" step="1" [(ngModel)]="compositeGroupSize" (ionChange)="onCompositeGroupSizeChange($event)" #compositeGroupSizeSlider>
+    <ion-label slot="start">Composite group size</ion-label>
+    <ion-label slot="end">{{compositeGroupSize}}</ion-label>
+  </ion-range>
+</ion-item>
