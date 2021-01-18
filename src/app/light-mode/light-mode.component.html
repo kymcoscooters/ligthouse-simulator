@@ -19,3 +19,12 @@
   (periodLengthMin)="setPeriodLengthMin($event)"
   [periodLength]="periodLength"
 ></lsim-flashing>
+<lsim-occulting
+  *ngIf="selectedLightMode == 'Occulting'"
+  (turnOn)="emitTurnOn()"
+  (turnOff)="emitTurnOff()"
+  (intervals)="setIntervals($event)"
+  (settingsChanged)="onSettingsChanged()"
+  (periodLengthMin)="setPeriodLengthMin($event)"
+  [periodLength]="periodLength"
+></lsim-occulting>

@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { FlashingComponent } from '../flashing/flashing.component';
+import { OccultingComponent } from '../occulting/occulting.component';
 
 @Component({
   selector: 'lsim-light-mode',
@@ -13,6 +14,7 @@ export class LightModeComponent implements OnInit {
 
   @ViewChild('periodLengthSlider') periodLengthSlider
   @ViewChild(FlashingComponent) flashingComponent
+  @ViewChild(OccultingComponent) occultingComponent
 
   @Output() lightModeChange = new EventEmitter<String>()
   @Output() periodLengthChange = new EventEmitter<String>()
@@ -22,7 +24,7 @@ export class LightModeComponent implements OnInit {
   @Output() settingsChanged = new EventEmitter()
 
   constructor() {
-    this.lightModes = ['Fixed', 'Flashing', 'Isophase']
+    this.lightModes = ['Fixed', 'Flashing', 'Isophase', 'Occulting']
     this.selectedLightMode = this.lightModes[0]
     this.periodLength = 2
   }
@@ -66,6 +68,8 @@ export class LightModeComponent implements OnInit {
       case 'Isophase':
         this.isophase()
         break
+      case 'Occulting':
+        this.occultingComponent.start()
     }
   }
 
@@ -93,6 +97,7 @@ export class LightModeComponent implements OnInit {
         return false
       case 'Flashing':
       case 'Isophase':
+      case 'Occulting':
         return true
     }
   }
@@ -125,6 +130,8 @@ export class LightModeComponent implements OnInit {
         return this.flashingComponent?.getModeAbbreviation(color, this.periodLength)
       case 'Isophase':
         return `Iso ${getColorCharacter()} ${this.periodLength}s`
+      case 'Occulting':
+        return this.occultingComponent?.getModeAbbreviation(color, this.periodLength)
     }
   }
 }

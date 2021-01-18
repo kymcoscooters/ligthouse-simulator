@@ -6,6 +6,7 @@ import { HomePage } from './home.page';
 import { ColorModeComponent } from '../color-mode/color-mode.component';
 import { LightModeComponent } from '../light-mode/light-mode.component';
 import { FlashingComponent } from '../flashing/flashing.component';
+import { OccultingComponent } from '../occulting/occulting.component';
 
 import { HomePageRoutingModule } from './home-routing.module';
 
@@ -21,7 +22,8 @@ import { HomePageRoutingModule } from './home-routing.module';
     HomePage,
     ColorModeComponent,
     LightModeComponent,
-    FlashingComponent
+    FlashingComponent,
+    OccultingComponent
   ]
 })
 export class HomePageModule {}
