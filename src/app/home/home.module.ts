@@ -11,6 +11,8 @@ import { QuickComponent } from '../quick/quick.component';
 import { VeryQuickComponent } from '../very-quick/very-quick.component';
 import { UltraQuickComponent } from '../ultra-quick/ultra-quick.component';
 import { MorseComponent } from '../morse/morse.component';
+import { CartaMarinaComponent } from '../carta-marina/carta-marina.component';
+import { CardinalMarksComponent } from '../cardinal-marks/cardinal-marks.component';
 
 import { HomePageRoutingModule } from './home-routing.module';
 
@@ -31,7 +33,9 @@ import { HomePageRoutingModule } from './home-routing.module';
     QuickComponent,
     VeryQuickComponent,
     UltraQuickComponent,
-    MorseComponent
+    MorseComponent,
+    CartaMarinaComponent,
+    CardinalMarksComponent
   ]
 })
 export class HomePageModule {}

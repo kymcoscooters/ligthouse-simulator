@@ -1,0 +1,6 @@
+<ion-item color="medium">
+  <ion-label>Cardinal Mark</ion-label>
+  <ion-select interface="action-sheet" value="{{cardinalMarks[0]}}" (ionChange)="onCardinalMarkChange($event)">
+    <ion-select-option *ngFor="let mark of cardinalMarks">{{mark}}</ion-select-option>
+  </ion-select>
+</ion-item>

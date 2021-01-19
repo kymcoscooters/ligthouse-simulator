@@ -64,3 +64,17 @@
   (periodLengthMin)="setPeriodLengthMin($event)"
   [periodLength]="periodLength"
 ></lsim-morse>
+<lsim-carta-marina
+  [hidden]="selectedLightMode != 'Carta Marina'"
+  (turnOn)="emitTurnOn()"
+  (turnOff)="emitTurnOff()"
+  (intervals)="setIntervals($event)"
+  (settingsChanged)="onSettingsChanged()"
+></lsim-carta-marina>
+<lsim-cardinal-marks
+  [hidden]="selectedLightMode != 'Cardinal Marks'"
+  (turnOn)="emitTurnOn()"
+  (turnOff)="emitTurnOff()"
+  (intervals)="setIntervals($event)"
+  (settingsChanged)="onSettingsChanged()"
+></lsim-cardinal-marks>

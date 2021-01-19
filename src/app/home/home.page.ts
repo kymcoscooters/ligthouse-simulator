@@ -82,7 +82,6 @@ export class HomePage {
   }
 
   turnOn() {
-    console.log('turning on')
     if (this.colorMode.selectedColorMode != 'LED') {
       this.content.nativeElement.classList.add(this.colorMode.selectedColorMode)
       this.content.nativeElement.classList.remove('black')
@@ -92,7 +91,6 @@ export class HomePage {
   }
 
   turnOff() {
-    console.log('turning off')
     if (this.colorMode.selectedColorMode != 'LED') {
       this.content.nativeElement.classList.remove(this.colorMode.selectedColorMode)
       this.content.nativeElement.classList.add('black')

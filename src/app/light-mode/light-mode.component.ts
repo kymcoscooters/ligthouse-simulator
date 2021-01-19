@@ -1,4 +1,6 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { CardinalMarksComponent } from '../cardinal-marks/cardinal-marks.component';
+import { CartaMarinaComponent } from '../carta-marina/carta-marina.component';
 import { FlashingComponent } from '../flashing/flashing.component';
 import { MorseComponent } from '../morse/morse.component';
 import { OccultingComponent } from '../occulting/occulting.component';
@@ -24,6 +26,8 @@ export class LightModeComponent implements OnInit {
   @ViewChild(VeryQuickComponent) veryQuickComponent
   @ViewChild(UltraQuickComponent) ultraQuickcomponent
   @ViewChild(MorseComponent) morseComponent
+  @ViewChild(CartaMarinaComponent) cartaMarinaComponent
+  @ViewChild(CardinalMarksComponent) cardinalMarksComponent
 
   @Output() turnOn = new EventEmitter()
   @Output() turnOff = new EventEmitter()
@@ -31,7 +35,18 @@ export class LightModeComponent implements OnInit {
   @Output() settingsChanged = new EventEmitter()
 
   constructor() {
-    this.lightModes = ['Fixed', 'Flashing', 'Isophase', 'Occulting', 'Quick', 'Very quick', 'Ultra quick', 'Morse']
+    this.lightModes = [
+      'Fixed',
+      'Flashing',
+      'Isophase',
+      'Occulting',
+      'Quick',
+      'Very quick',
+      'Ultra quick',
+      'Morse',
+      'Carta Marina',
+      'Cardinal Marks'
+    ]
     this.selectedLightMode = this.lightModes[0]
     this.periodLength = 2
     this.periodLengthVisible = false
@@ -95,6 +110,10 @@ export class LightModeComponent implements OnInit {
       case 'Morse':
         this.morseComponent.start()
         break
+      case 'Carta Marina':
+        this.cartaMarinaComponent.start()
+      case 'Cardinal Marks':
+        this.cardinalMarksComponent.start()
     }
   }
 
@@ -119,6 +138,8 @@ export class LightModeComponent implements OnInit {
   isPeriodLengthVisible() {
     switch (this.selectedLightMode) {
       case 'Fixed':
+      case 'Carta Marina':
+      case 'Cardinal Marks':
         return false
       case 'Flashing':
       case 'Isophase':
@@ -172,6 +193,10 @@ export class LightModeComponent implements OnInit {
         return this.ultraQuickcomponent.getModeAbbreviation(color, this.periodLength)
       case 'Morse':
         return this.morseComponent.getModeAbbreviation(color, this.periodLength)
+      case 'Carta Marina':
+        return this.cartaMarinaComponent.getModeAbbreviation(color)
+      case 'Cardinal Marks':
+        return this.cardinalMarksComponent.getModeAbbreviation(color)
     }
   }
 }

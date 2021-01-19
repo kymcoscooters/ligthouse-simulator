@@ -1,7 +1,7 @@
 <ion-content [fullscreen]="true">
   <div id="container" #content>
     <div class="title">Lighthouse Simulator</div>
-    <p>Choose light mode, edit the settings and press start</p>
+    <p>Choose light mode, edit the settings and press the 'Turn On' button</p>
     <lsim-color-mode (colorChange)="setModeAbbreviation()"></lsim-color-mode>
     <lsim-light-mode
       (settingsChanged)="setModeAbbreviation()"
