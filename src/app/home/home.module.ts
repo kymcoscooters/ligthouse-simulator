@@ -7,6 +7,10 @@ import { ColorModeComponent } from '../color-mode/color-mode.component';
 import { LightModeComponent } from '../light-mode/light-mode.component';
 import { FlashingComponent } from '../flashing/flashing.component';
 import { OccultingComponent } from '../occulting/occulting.component';
+import { QuickComponent } from '../quick/quick.component';
+import { VeryQuickComponent } from '../very-quick/very-quick.component';
+import { UltraQuickComponent } from '../ultra-quick/ultra-quick.component';
+import { MorseComponent } from '../morse/morse.component';
 
 import { HomePageRoutingModule } from './home-routing.module';
 
@@ -23,7 +27,11 @@ import { HomePageRoutingModule } from './home-routing.module';
     ColorModeComponent,
     LightModeComponent,
     FlashingComponent,
-    OccultingComponent
+    OccultingComponent,
+    QuickComponent,
+    VeryQuickComponent,
+    UltraQuickComponent,
+    MorseComponent
   ]
 })
 export class HomePageModule {}

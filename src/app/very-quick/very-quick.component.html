@@ -1,0 +1,12 @@
+<ion-item color="medium">
+  <ion-label>Very quick mode</ion-label>
+  <ion-select interface="action-sheet" value="{{veryQuickModes[0]}}" (ionChange)="onVeryQuickModeChange($event)">
+    <ion-select-option *ngFor="let veryQuickMode of veryQuickModes">{{veryQuickMode}}</ion-select-option>
+  </ion-select>
+</ion-item>
+<ion-item color="medium" #groupSizeContainer *ngIf="isGroupSizeVisible()">
+  <ion-range color="light" min="2" max="10" step="1" [(ngModel)]="groupSize" (ionChange)="onGroupSizeChange($event)" #groupSizeSlider>
+    <ion-label slot="start">Group size</ion-label>
+    <ion-label slot="end">{{groupSize}}</ion-label>
+  </ion-range>
+</ion-item>

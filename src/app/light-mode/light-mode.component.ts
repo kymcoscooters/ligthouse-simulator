@@ -1,6 +1,10 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { FlashingComponent } from '../flashing/flashing.component';
+import { MorseComponent } from '../morse/morse.component';
 import { OccultingComponent } from '../occulting/occulting.component';
+import { QuickComponent } from '../quick/quick.component';
+import { UltraQuickComponent } from '../ultra-quick/ultra-quick.component';
+import { VeryQuickComponent } from '../very-quick/very-quick.component';
 
 @Component({
   selector: 'lsim-light-mode',
@@ -11,34 +15,41 @@ export class LightModeComponent implements OnInit {
   lightModes: String[]
   selectedLightMode: String
   periodLength: number
+  periodLengthVisible: boolean
 
   @ViewChild('periodLengthSlider') periodLengthSlider
   @ViewChild(FlashingComponent) flashingComponent
   @ViewChild(OccultingComponent) occultingComponent
+  @ViewChild(QuickComponent) quickComponent
+  @ViewChild(VeryQuickComponent) veryQuickComponent
+  @ViewChild(UltraQuickComponent) ultraQuickcomponent
+  @ViewChild(MorseComponent) morseComponent
 
-  @Output() lightModeChange = new EventEmitter<String>()
-  @Output() periodLengthChange = new EventEmitter<String>()
   @Output() turnOn = new EventEmitter()
   @Output() turnOff = new EventEmitter()
   @Output() intervals = new EventEmitter()
   @Output() settingsChanged = new EventEmitter()
 
   constructor() {
-    this.lightModes = ['Fixed', 'Flashing', 'Isophase', 'Occulting']
+    this.lightModes = ['Fixed', 'Flashing', 'Isophase', 'Occulting', 'Quick', 'Very quick', 'Ultra quick', 'Morse']
     this.selectedLightMode = this.lightModes[0]
     this.periodLength = 2
+    this.periodLengthVisible = false
   }
 
   ngOnInit() {}
 
   onLightModeChange(event) {
     this.selectedLightMode = event.detail.value
-    this.lightModeChange.emit(event.detail.value)
+    if (this.selectedLightMode == 'Morse') {
+      this.setPeriodLengthMin(6)
+    }
+    this.onSettingsChanged()
   }
 
   onPeriodLengthChange(event) {
     this.periodLength = event.detail.value
-    this.periodLengthChange.emit(event.detail.value)
+    this.onSettingsChanged()
   }
 
   emitTurnOn() {
@@ -55,6 +66,7 @@ export class LightModeComponent implements OnInit {
 
   onSettingsChanged() {
     this.settingsChanged.emit()
+    this.periodLengthVisible = this.isPeriodLengthVisible()
   }
 
   start() {
@@ -70,6 +82,19 @@ export class LightModeComponent implements OnInit {
         break
       case 'Occulting':
         this.occultingComponent.start()
+        break
+      case 'Quick':
+        this.quickComponent.start()
+        break
+      case 'Very quick':
+        this.veryQuickComponent.start()
+        break
+      case 'Ultra quick':
+        this.ultraQuickcomponent.start()
+        break
+      case 'Morse':
+        this.morseComponent.start()
+        break
     }
   }
 
@@ -98,7 +123,14 @@ export class LightModeComponent implements OnInit {
       case 'Flashing':
       case 'Isophase':
       case 'Occulting':
+      case 'Morse':
         return true
+      case 'Quick':
+        return this.quickComponent?.isPeriodLengthVisible()
+      case 'Very quick':
+        return this.veryQuickComponent.isPeriodLengthVisible()
+      case 'Ultra quick':
+        return this.ultraQuickcomponent.isPeriodLengthVisible()
     }
   }
 
@@ -132,6 +164,14 @@ export class LightModeComponent implements OnInit {
         return `Iso ${getColorCharacter()} ${this.periodLength}s`
       case 'Occulting':
         return this.occultingComponent?.getModeAbbreviation(color, this.periodLength)
+      case 'Quick':
+        return this.quickComponent?.getModeAbbreviation(color, this.periodLength)
+      case 'Very quick':
+        return this.veryQuickComponent.getModeAbbreviation(color, this.periodLength)
+      case 'Ultra quick':
+        return this.ultraQuickcomponent.getModeAbbreviation(color, this.periodLength)
+      case 'Morse':
+        return this.morseComponent.getModeAbbreviation(color, this.periodLength)
     }
   }
 }

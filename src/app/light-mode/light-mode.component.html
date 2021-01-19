@@ -4,14 +4,14 @@
     <ion-select-option *ngFor="let lightMode of lightModes">{{lightMode}}</ion-select-option>
   </ion-select>
 </ion-item>
-<ion-item color="medium" #periodLengthContainer *ngIf="isPeriodLengthVisible()">
+<ion-item color="medium" #periodLengthContainer [hidden]="!periodLengthVisible">
   <ion-range color="light" min="2" max="60" step="1" [(ngModel)]="periodLength" (ionChange)="onPeriodLengthChange($event)" #periodLengthSlider>
     <ion-label slot="start">Period length</ion-label>
     <ion-label slot="end">{{periodLength}}s</ion-label>
   </ion-range>
 </ion-item>
 <lsim-flashing
-  *ngIf="selectedLightMode == 'Flashing'"
+  [hidden]="selectedLightMode != 'Flashing'"
   (turnOn)="emitTurnOn()"
   (turnOff)="emitTurnOff()"
   (intervals)="setIntervals($event)"
@@ -20,7 +20,7 @@
   [periodLength]="periodLength"
 ></lsim-flashing>
 <lsim-occulting
-  *ngIf="selectedLightMode == 'Occulting'"
+  [hidden]="selectedLightMode != 'Occulting'"
   (turnOn)="emitTurnOn()"
   (turnOff)="emitTurnOff()"
   (intervals)="setIntervals($event)"
@@ -28,3 +28,39 @@
   (periodLengthMin)="setPeriodLengthMin($event)"
   [periodLength]="periodLength"
 ></lsim-occulting>
+<lsim-quick
+  [hidden]="selectedLightMode != 'Quick'"
+  (turnOn)="emitTurnOn()"
+  (turnOff)="emitTurnOff()"
+  (intervals)="setIntervals($event)"
+  (settingsChanged)="onSettingsChanged()"
+  (periodLengthMin)="setPeriodLengthMin($event)"
+  [periodLength]="periodLength"
+></lsim-quick>
+<lsim-very-quick
+  [hidden]="selectedLightMode != 'Very quick'"
+  (turnOn)="emitTurnOn()"
+  (turnOff)="emitTurnOff()"
+  (intervals)="setIntervals($event)"
+  (settingsChanged)="onSettingsChanged()"
+  (periodLengthMin)="setPeriodLengthMin($event)"
+  [periodLength]="periodLength"
+></lsim-very-quick>
+<lsim-ultra-quick
+  [hidden]="selectedLightMode != 'Ultra quick'"
+  (turnOn)="emitTurnOn()"
+  (turnOff)="emitTurnOff()"
+  (intervals)="setIntervals($event)"
+  (settingsChanged)="onSettingsChanged()"
+  (periodLengthMin)="setPeriodLengthMin($event)"
+  [periodLength]="periodLength"
+></lsim-ultra-quick>
+<lsim-morse
+  [hidden]="selectedLightMode != 'Morse'"
+  (turnOn)="emitTurnOn()"
+  (turnOff)="emitTurnOff()"
+  (intervals)="setIntervals($event)"
+  (settingsChanged)="onSettingsChanged()"
+  (periodLengthMin)="setPeriodLengthMin($event)"
+  [periodLength]="periodLength"
+></lsim-morse>
