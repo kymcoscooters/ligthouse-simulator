@@ -1,7 +1,7 @@
 <ion-content [fullscreen]="true">
   <div id="container" #content>
     <div class="title">Lighthouse Simulator</div>
-    <p>Choose light mode, edit the settings and press the 'Turn On' button</p>
+    <p>{{ 'info' | translate }}</p>
     <lsim-color-mode (colorChange)="setModeAbbreviation()"></lsim-color-mode>
     <lsim-light-mode
       (settingsChanged)="setModeAbbreviation()"
@@ -16,8 +16,8 @@
   <ion-toolbar color="light" #footerBar>
     <p class="abbreviation">{{modeAbbreviation}}</p>
     <div class="buttons">
-      <ion-button color="medium" *ngIf="!running" (click)="start()">Turn on!</ion-button>
-      <ion-button color="medium" *ngIf="running" id="cancel" (click)="cancel()">Turn off!</ion-button>
+      <ion-button color="medium" *ngIf="!running" (click)="start()">{{ 'turn-on' | translate }}</ion-button>
+      <ion-button color="medium" *ngIf="running" id="cancel" (click)="cancel()">{{ 'turn-off' | translate }}</ion-button>
     </div>
   </ion-toolbar>
 </ion-footer>

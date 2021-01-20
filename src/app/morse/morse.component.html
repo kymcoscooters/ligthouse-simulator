@@ -1,6 +1,11 @@
 <ion-item color="medium">
-  <ion-label>Morse letter</ion-label>
-  <ion-select interface="action-sheet" value="{{objectKeys(morseLetters)[0]}}" (ionChange)="onMorseLetterChange($event)">
+  <ion-label>{{ 'morse-letter' | translate }}</ion-label>
+  <ion-select
+    interface="action-sheet"
+    value="{{objectKeys(morseLetters)[0]}}"
+    cancelText="{{ 'cancel' | translate }}"
+    (ionChange)="onMorseLetterChange($event)"
+  >
     <ion-select-option *ngFor="let letter of objectKeys(morseLetters)">{{letter}}</ion-select-option>
   </ion-select>
 </ion-item>

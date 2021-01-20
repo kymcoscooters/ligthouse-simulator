@@ -15,7 +15,7 @@ export class OccultingComponent implements OnInit {
 
   @Input() periodLength
 
-  occultingModes: String[] = ['Single-occulting', 'Group-occulting', 'Composite group-occulting']
+  occultingModes: String[] = ['single-occulting', 'group-occulting', 'composite-group-occulting']
   selectedOccultingMode: String
   groupSize: number
   compositeGroupSize: number
@@ -30,10 +30,10 @@ export class OccultingComponent implements OnInit {
 
   isGroupSizeVisible() {
     switch (this.selectedOccultingMode) {
-      case 'Single-occulting':
+      case 'single-occulting':
         return false
-      case 'Group-occulting':
-      case 'Composite group-occulting':
+      case 'group-occulting':
+      case 'composite-group-occulting':
         return true
     }
   }
@@ -41,30 +41,29 @@ export class OccultingComponent implements OnInit {
   getModeAbbreviation(color, periodLength) {
     const getColorCharacter = () => {
       switch (color) {
-        case 'LED':
-        case 'White':
+        case 'led':
+        case 'white':
           return 'W'
-        case 'Red':
+        case 'red':
           return 'R'
-        case 'Green':
+        case 'green':
           return 'G'
       }
     }
 
     switch(this.selectedOccultingMode) {
-      case 'Single-occulting':
+      case 'single-occulting':
         return `Oc ${getColorCharacter()} ${periodLength}s`
-      case 'Group-occulting':
+      case 'group-occulting':
         return `Oc(${this.groupSize}) ${getColorCharacter()} ${periodLength}s`
-      case 'Composite group-occulting':
+      case 'composite-group-occulting':
         return `Oc(${this.groupSize}+${this.compositeGroupSize}) ${getColorCharacter()} ${periodLength}s`
     }
   }
 
-  onOccultingModeChange(event) {
-    this.selectedOccultingMode = event.detail.value
+  onOccultingModeChange() {
     switch (this.selectedOccultingMode) {
-      case 'Single-occulting':
+      case 'single-occulting':
         this.periodLengthMin.emit(2)
         break
     }
@@ -75,7 +74,7 @@ export class OccultingComponent implements OnInit {
     this.groupSize = event.detail.value
     // Minimum period length should be group size + 3, to leave at least 3 seconds of light before the group starts
     // again. If composite group occulting is selected, additional time should be added
-    if(this.selectedOccultingMode == 'Group-occulting') {
+    if(this.selectedOccultingMode == 'group-occulting') {
       this.periodLengthMin.emit(this.groupSize + 3)
     } else {
       this.periodLengthMin.emit(this.groupSize + this.compositeGroupSize + 5)
@@ -93,13 +92,13 @@ export class OccultingComponent implements OnInit {
 
   start() {
     switch (this.selectedOccultingMode) {
-      case 'Single-occulting':
+      case 'single-occulting':
         this.singleOcculting()
         break
-      case 'Group-occulting':
+      case 'group-occulting':
         this.groupOcculting()
         break
-      case 'Composite group-occulting':
+      case 'composite-group-occulting':
         this.compositeGroupOcculting()
         break
     }

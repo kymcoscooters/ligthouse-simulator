@@ -15,7 +15,7 @@ export class UltraQuickComponent implements OnInit {
 
   @Input() periodLength
 
-  ultraQuickModes: String[] = ['Continuous ultra quick', 'Interrupted ultra quick']
+  ultraQuickModes: String[] = ['continuous-ultra-quick', 'interrupted-ultra-quick']
   selectedUltraQuickMode: String
 
   constructor() {
@@ -26,9 +26,9 @@ export class UltraQuickComponent implements OnInit {
 
   isPeriodLengthVisible() {
     switch (this.selectedUltraQuickMode) {
-      case 'Continuous ultra quick':
+      case 'continuous-ultra-quick':
         return false
-      case 'Interrupted ultra quick':
+      case 'interrupted-ultra-quick':
         return true
     }
   }
@@ -36,27 +36,26 @@ export class UltraQuickComponent implements OnInit {
   getModeAbbreviation(color, periodLength) {
     const getColorCharacter = () => {
       switch (color) {
-        case 'LED':
-        case 'White':
+        case 'led':
+        case 'white':
           return 'W'
-        case 'Red':
+        case 'red':
           return 'R'
-        case 'Green':
+        case 'green':
           return 'G'
       }
     }
 
     switch(this.selectedUltraQuickMode) {
-      case 'Continuous ultra quick':
+      case 'continuous-ultra-quick':
         return `UQ ${getColorCharacter()}`
-      case 'Interrupted ultra quick':
+      case 'interrupted-ultra-quick':
         return `I.UQ ${getColorCharacter()} ${periodLength}s`
     }
   }
 
-  onUltraQuickModeChange(event) {
-    this.selectedUltraQuickMode = event.detail.value
-    if (this.selectedUltraQuickMode == 'Interrupted ultra quick') {
+  onUltraQuickModeChange() {
+    if (this.selectedUltraQuickMode == 'interrupted-ultra-quick') {
       this.periodLengthMin.emit(8)
     }
     this.settingsChanged.emit()
@@ -64,10 +63,10 @@ export class UltraQuickComponent implements OnInit {
 
   start() {
     switch (this.selectedUltraQuickMode) {
-      case 'Continuous ultra quick':
+      case 'continuous-ultra-quick':
         this.continuousUltraQuick()
         break
-      case 'Interrupted ultra quick':
+      case 'interrupted-ultra-quick':
         this.interruptedUltraQuick()
         break
     }

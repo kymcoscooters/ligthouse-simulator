@@ -37,12 +37,12 @@ export class CartaMarinaComponent implements OnInit {
   getModeAbbreviation(color) {
     const getColorCharacter = () => {
       switch (color) {
-        case 'LED':
-        case 'White':
+        case 'led':
+        case 'white':
           return 'W'
-        case 'Red':
+        case 'red':
           return 'R'
-        case 'Green':
+        case 'green':
           return 'G'
       }
     }

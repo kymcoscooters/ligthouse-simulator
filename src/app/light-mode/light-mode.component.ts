@@ -36,16 +36,16 @@ export class LightModeComponent implements OnInit {
 
   constructor() {
     this.lightModes = [
-      'Fixed',
-      'Flashing',
-      'Isophase',
-      'Occulting',
-      'Quick',
-      'Very quick',
-      'Ultra quick',
-      'Morse',
-      'Carta Marina',
-      'Cardinal Marks'
+      'fixed',
+      'flashing',
+      'isophase',
+      'occulting',
+      'quick',
+      'very-quick',
+      'ultra-quick',
+      'morse',
+      'carta-marina',
+      'cardinal-marks'
     ]
     this.selectedLightMode = this.lightModes[0]
     this.periodLength = 2
@@ -56,7 +56,7 @@ export class LightModeComponent implements OnInit {
 
   onLightModeChange(event) {
     this.selectedLightMode = event.detail.value
-    if (this.selectedLightMode == 'Morse') {
+    if (this.selectedLightMode == 'morse') {
       this.setPeriodLengthMin(6)
     }
     this.onSettingsChanged()
@@ -86,33 +86,33 @@ export class LightModeComponent implements OnInit {
 
   start() {
     switch (this.selectedLightMode) {
-      case 'Fixed':
+      case 'fixed':
         this.emitTurnOn()
         break
-      case 'Flashing':
+      case 'flashing':
         this.flashingComponent.start()
         break
-      case 'Isophase':
+      case 'isophase':
         this.isophase()
         break
-      case 'Occulting':
+      case 'occulting':
         this.occultingComponent.start()
         break
-      case 'Quick':
+      case 'quick':
         this.quickComponent.start()
         break
-      case 'Very quick':
+      case 'very-quick':
         this.veryQuickComponent.start()
         break
-      case 'Ultra quick':
+      case 'ultra-quick':
         this.ultraQuickcomponent.start()
         break
-      case 'Morse':
+      case 'morse':
         this.morseComponent.start()
         break
-      case 'Carta Marina':
+      case 'carta-marina':
         this.cartaMarinaComponent.start()
-      case 'Cardinal Marks':
+      case 'cardinal-marks':
         this.cardinalMarksComponent.start()
     }
   }
@@ -137,20 +137,20 @@ export class LightModeComponent implements OnInit {
 
   isPeriodLengthVisible() {
     switch (this.selectedLightMode) {
-      case 'Fixed':
-      case 'Carta Marina':
-      case 'Cardinal Marks':
+      case 'fixed':
+      case 'carta-marina':
+      case 'cardinal-marks':
         return false
-      case 'Flashing':
-      case 'Isophase':
-      case 'Occulting':
-      case 'Morse':
+      case 'flashing':
+      case 'isophase':
+      case 'occulting':
+      case 'morse':
         return true
-      case 'Quick':
+      case 'quick':
         return this.quickComponent?.isPeriodLengthVisible()
-      case 'Very quick':
+      case 'very-quick':
         return this.veryQuickComponent.isPeriodLengthVisible()
-      case 'Ultra quick':
+      case 'ultra-quick':
         return this.ultraQuickcomponent.isPeriodLengthVisible()
     }
   }
@@ -166,36 +166,36 @@ export class LightModeComponent implements OnInit {
   getModeAbbreviation(color) {
     const getColorCharacter = () => {
       switch (color) {
-        case 'LED':
-        case 'White':
+        case 'led':
+        case 'white':
           return 'W'
-        case 'Red':
+        case 'red':
           return 'R'
-        case 'Green':
+        case 'green':
           return 'G'
       }
     }
 
     switch (this.selectedLightMode) {
-      case 'Fixed':
+      case 'fixed':
         return `F ${getColorCharacter()}`
-      case 'Flashing':
+      case 'flashing':
         return this.flashingComponent?.getModeAbbreviation(color, this.periodLength)
-      case 'Isophase':
+      case 'isophase':
         return `Iso ${getColorCharacter()} ${this.periodLength}s`
-      case 'Occulting':
+      case 'occulting':
         return this.occultingComponent?.getModeAbbreviation(color, this.periodLength)
-      case 'Quick':
+      case 'quick':
         return this.quickComponent?.getModeAbbreviation(color, this.periodLength)
-      case 'Very quick':
+      case 'very-quick':
         return this.veryQuickComponent.getModeAbbreviation(color, this.periodLength)
-      case 'Ultra quick':
+      case 'ultra-quick':
         return this.ultraQuickcomponent.getModeAbbreviation(color, this.periodLength)
-      case 'Morse':
+      case 'morse':
         return this.morseComponent.getModeAbbreviation(color, this.periodLength)
-      case 'Carta Marina':
+      case 'carta-marina':
         return this.cartaMarinaComponent.getModeAbbreviation(color)
-      case 'Cardinal Marks':
+      case 'cardinal-marks':
         return this.cardinalMarksComponent.getModeAbbreviation(color)
     }
   }

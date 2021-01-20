@@ -1,17 +1,23 @@
 <ion-item color="medium">
-  <ion-label>Light mode</ion-label>
-  <ion-select interface="action-sheet" value="{{lightModes[0]}}" (ionChange)="onLightModeChange($event)">
-    <ion-select-option *ngFor="let lightMode of lightModes">{{lightMode}}</ion-select-option>
+  <ion-label>{{ 'light-mode' | translate }}</ion-label>
+  <ion-select
+    interface="action-sheet"
+    [(ngModel)]="selectedLightMode"
+    [selectedText]="selectedLightMode | translate"
+    cancelText="{{ 'cancel' | translate }}"
+    (ionChange)="onLightModeChange($event)"
+  >
+    <ion-select-option *ngFor="let lightMode of lightModes" value="{{ lightMode }}">{{ lightMode | translate }}</ion-select-option>
   </ion-select>
 </ion-item>
 <ion-item color="medium" #periodLengthContainer [hidden]="!periodLengthVisible">
   <ion-range color="light" min="2" max="60" step="1" [(ngModel)]="periodLength" (ionChange)="onPeriodLengthChange($event)" #periodLengthSlider>
-    <ion-label slot="start">Period length</ion-label>
+    <ion-label slot="start">{{ 'period-length' | translate}}</ion-label>
     <ion-label slot="end">{{periodLength}}s</ion-label>
   </ion-range>
 </ion-item>
 <lsim-flashing
-  [hidden]="selectedLightMode != 'Flashing'"
+  [hidden]="selectedLightMode != 'flashing'"
   (turnOn)="emitTurnOn()"
   (turnOff)="emitTurnOff()"
   (intervals)="setIntervals($event)"
@@ -20,7 +26,7 @@
   [periodLength]="periodLength"
 ></lsim-flashing>
 <lsim-occulting
-  [hidden]="selectedLightMode != 'Occulting'"
+  [hidden]="selectedLightMode != 'occulting'"
   (turnOn)="emitTurnOn()"
   (turnOff)="emitTurnOff()"
   (intervals)="setIntervals($event)"
@@ -29,7 +35,7 @@
   [periodLength]="periodLength"
 ></lsim-occulting>
 <lsim-quick
-  [hidden]="selectedLightMode != 'Quick'"
+  [hidden]="selectedLightMode != 'quick'"
   (turnOn)="emitTurnOn()"
   (turnOff)="emitTurnOff()"
   (intervals)="setIntervals($event)"
@@ -38,7 +44,7 @@
   [periodLength]="periodLength"
 ></lsim-quick>
 <lsim-very-quick
-  [hidden]="selectedLightMode != 'Very quick'"
+  [hidden]="selectedLightMode != 'very-quick'"
   (turnOn)="emitTurnOn()"
   (turnOff)="emitTurnOff()"
   (intervals)="setIntervals($event)"
@@ -47,7 +53,7 @@
   [periodLength]="periodLength"
 ></lsim-very-quick>
 <lsim-ultra-quick
-  [hidden]="selectedLightMode != 'Ultra quick'"
+  [hidden]="selectedLightMode != 'ultra-quick'"
   (turnOn)="emitTurnOn()"
   (turnOff)="emitTurnOff()"
   (intervals)="setIntervals($event)"
@@ -56,7 +62,7 @@
   [periodLength]="periodLength"
 ></lsim-ultra-quick>
 <lsim-morse
-  [hidden]="selectedLightMode != 'Morse'"
+  [hidden]="selectedLightMode != 'morse'"
   (turnOn)="emitTurnOn()"
   (turnOff)="emitTurnOff()"
   (intervals)="setIntervals($event)"
@@ -65,14 +71,14 @@
   [periodLength]="periodLength"
 ></lsim-morse>
 <lsim-carta-marina
-  [hidden]="selectedLightMode != 'Carta Marina'"
+  [hidden]="selectedLightMode != 'carta-marina'"
   (turnOn)="emitTurnOn()"
   (turnOff)="emitTurnOff()"
   (intervals)="setIntervals($event)"
   (settingsChanged)="onSettingsChanged()"
 ></lsim-carta-marina>
 <lsim-cardinal-marks
-  [hidden]="selectedLightMode != 'Cardinal Marks'"
+  [hidden]="selectedLightMode != 'cardinal-marks'"
   (turnOn)="emitTurnOn()"
   (turnOff)="emitTurnOff()"
   (intervals)="setIntervals($event)"

@@ -1,6 +1,12 @@
 <ion-item color="medium">
-  <ion-label>Ultra quick mode</ion-label>
-  <ion-select interface="action-sheet" value="{{ultraQuickModes[0]}}" (ionChange)="onUltraQuickModeChange($event)">
-    <ion-select-option *ngFor="let ultraQuickMode of ultraQuickModes">{{ultraQuickMode}}</ion-select-option>
+  <ion-label text-wrap>{{ 'ultra-quick-mode' | translate }}</ion-label>
+  <ion-select
+    interface="action-sheet"
+    [(ngModel)]="selectedUltraQuickMode"
+    [selectedText]="selectedUltraQuickMode | translate"
+    cancelText="{{ 'cancel' | translate }}"
+    (ionChange)="onUltraQuickModeChange()"
+  >
+    <ion-select-option *ngFor="let ultraQuickMode of ultraQuickModes" value="{{ ultraQuickMode }}">{{ ultraQuickMode | translate }}</ion-select-option>
   </ion-select>
 </ion-item>

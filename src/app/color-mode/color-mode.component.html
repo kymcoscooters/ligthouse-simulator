@@ -1,6 +1,12 @@
 <ion-item color="medium">
-  <ion-label >Color mode</ion-label>
-  <ion-select interface="action-sheet" value="{{colorModes[0]}}" (ionChange)="onColorModeChange($event)">
-    <ion-select-option *ngFor="let colorMode of colorModes">{{colorMode}}</ion-select-option>
+  <ion-label>{{ 'color-mode' | translate }}</ion-label>
+  <ion-select
+    interface="action-sheet"
+    [(ngModel)]="selectedColorMode"
+    [selectedText]="selectedColorMode | translate"
+    cancelText="{{ 'cancel' | translate }}"
+    (ionChange)="onColorModeChange()"
+  >
+    <ion-select-option *ngFor="let colorMode of colorModes" value="{{colorMode}}">{{ colorMode | translate }}</ion-select-option>
   </ion-select>
 </ion-item>

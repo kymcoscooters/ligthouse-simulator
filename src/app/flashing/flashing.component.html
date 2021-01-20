@@ -1,18 +1,24 @@
 <ion-item color="medium">
-  <ion-label>Flashing mode</ion-label>
-  <ion-select interface="action-sheet" value="{{flashingModes[0]}}" (ionChange)="onFlashingModeChange($event)">
-    <ion-select-option *ngFor="let flashingMode of flashingModes">{{flashingMode}}</ion-select-option>
+  <ion-label>{{ 'flashing-mode' | translate }}</ion-label>
+  <ion-select
+    interface="action-sheet"
+    [(ngModel)]="selectedFlashingMode"
+    [selectedText]="selectedFlashingMode | translate"
+    cancelText="{{ 'cancel' | translate }}"
+    (ionChange)="onFlashingModeChange()"
+  >
+    <ion-select-option *ngFor="let flashingMode of flashingModes" value="{{flashingMode}}">{{ flashingMode | translate }}</ion-select-option>
   </ion-select>
 </ion-item>
 <ion-item color="medium" #groupSizeContainer *ngIf="isGroupSizeVisible()">
   <ion-range color="light" min="2" max="10" step="1" [(ngModel)]="groupSize" (ionChange)="onGroupSizeChange($event)" #groupSizeSlider>
-    <ion-label slot="start">Group size</ion-label>
+    <ion-label slot="start">{{ 'group-size' | translate }}</ion-label>
     <ion-label slot="end">{{groupSize}}</ion-label>
   </ion-range>
 </ion-item>
-<ion-item color="medium" #compositeGroupSizeContainer *ngIf="selectedFlashingMode == 'Composite group-flashing'">
+<ion-item color="medium" #compositeGroupSizeContainer *ngIf="selectedFlashingMode == 'composite-group-flashing'">
   <ion-range color="light" min="1" max="10" step="1" [(ngModel)]="compositeGroupSize" (ionChange)="onCompositeGroupSizeChange($event)" #compositeGroupSizeSlider>
-    <ion-label slot="start">Composite group size</ion-label>
+    <ion-label slot="start">{{ 'composite-group-size' | translate }}</ion-label>
     <ion-label slot="end">{{compositeGroupSize}}</ion-label>
   </ion-range>
 </ion-item>

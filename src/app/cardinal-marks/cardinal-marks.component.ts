@@ -12,7 +12,7 @@ export class CardinalMarksComponent implements OnInit {
   @Output() intervals = new EventEmitter()
   @Output() settingsChanged = new EventEmitter()
 
-  cardinalMarks = ['North', 'East', 'South', 'West']
+  cardinalMarks = ['north', 'east', 'south', 'west']
 
   selectedCardinalMark: string
 
@@ -25,45 +25,44 @@ export class CardinalMarksComponent implements OnInit {
   getModeAbbreviation(color) {
     const getColorCharacter = () => {
       switch (color) {
-        case 'LED':
-        case 'White':
+        case 'led':
+        case 'white':
           return 'W'
-        case 'Red':
+        case 'red':
           return 'R'
-        case 'Green':
+        case 'green':
           return 'G'
       }
     }
 
     switch(this.selectedCardinalMark) {
-      case 'North':
+      case 'north':
         return `Q ${getColorCharacter()}`
-      case 'East':
+      case 'east':
         return `Q(3) ${getColorCharacter()} 6s`
-      case 'South':
+      case 'south':
         return `Q(6)+L.Fl ${getColorCharacter()} 12s`
-      case 'West':
+      case 'west':
         return `Q(9) ${getColorCharacter()} 12s`
     }
   }
 
-  onCardinalMarkChange(event) {
-    this.selectedCardinalMark = event.detail.value
+  onCardinalMarkChange() {
     this.settingsChanged.emit()
   }
 
   start() {
     switch(this.selectedCardinalMark) {
-      case 'North':
+      case 'north':
         this.north()
         break
-      case 'East':
+      case 'east':
         this.groupQuick(6, 3)
         break
-      case 'South':
+      case 'south':
         this.south()
         break
-      case 'West':
+      case 'west':
         this.groupQuick(12, 9)
     }
   }

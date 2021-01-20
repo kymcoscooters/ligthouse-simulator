@@ -1,12 +1,18 @@
 <ion-item color="medium">
-  <ion-label>Quick mode</ion-label>
-  <ion-select interface="action-sheet" value="{{quickModes[0]}}" (ionChange)="onQuickModeChange($event)">
-    <ion-select-option *ngFor="let quickMode of quickModes">{{quickMode}}</ion-select-option>
+  <ion-label>{{ 'quick-mode' | translate }}</ion-label>
+  <ion-select
+    interface="action-sheet"
+    [(ngModel)]="selectedQuickMode"
+    [selectedText]="selectedQuickMode | translate"
+    cancelText="{{ 'cancel' | translate }}"
+    (ionChange)="onQuickModeChange()"
+  >
+    <ion-select-option *ngFor="let quickMode of quickModes" value="{{ quickMode }}">{{ quickMode | translate }}</ion-select-option>
   </ion-select>
 </ion-item>
 <ion-item color="medium" #groupSizeContainer *ngIf="isGroupSizeVisible()">
   <ion-range color="light" min="2" max="10" step="1" [(ngModel)]="groupSize" (ionChange)="onGroupSizeChange($event)" #groupSizeSlider>
-    <ion-label slot="start">Group size</ion-label>
+    <ion-label slot="start">{{ grou-size | translate }}</ion-label>
     <ion-label slot="end">{{groupSize}}</ion-label>
   </ion-range>
 </ion-item>

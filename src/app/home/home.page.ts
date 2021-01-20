@@ -18,6 +18,7 @@ export class HomePage {
   cancel
   running
   modeAbbreviation = 'F W'
+  lang
 
   @ViewChild('content') content: ElementRef
   @ViewChild('footerBar') footerBar
@@ -82,7 +83,7 @@ export class HomePage {
   }
 
   turnOn() {
-    if (this.colorMode.selectedColorMode != 'LED') {
+    if (this.colorMode.selectedColorMode != 'led') {
       this.content.nativeElement.classList.add(this.colorMode.selectedColorMode)
       this.content.nativeElement.classList.remove('black')
     } else {
@@ -91,7 +92,7 @@ export class HomePage {
   }
 
   turnOff() {
-    if (this.colorMode.selectedColorMode != 'LED') {
+    if (this.colorMode.selectedColorMode != 'led') {
       this.content.nativeElement.classList.remove(this.colorMode.selectedColorMode)
       this.content.nativeElement.classList.add('black')
     } else {

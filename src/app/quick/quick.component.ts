@@ -15,7 +15,7 @@ export class QuickComponent implements OnInit {
 
   @Input() periodLength
 
-  quickModes: String[] = ['Continuous quick', 'Group quick', 'Interrupted quick']
+  quickModes: String[] = ['continuous-quick', 'group-quick', 'interrupted-quick']
   selectedQuickMode: String
   groupSize: number
 
@@ -28,20 +28,20 @@ export class QuickComponent implements OnInit {
 
   isGroupSizeVisible() {
     switch (this.selectedQuickMode) {
-      case 'Continuous quick':
-      case 'Interrupted quick':
+      case 'continuous-quick':
+      case 'interrupted-quick':
         return false
-      case 'Group quick':
+      case 'group-quick':
         return true
     }
   }
 
   isPeriodLengthVisible() {
     switch (this.selectedQuickMode) {
-      case 'Continuous quick':
+      case 'continuous-quick':
         return false
-      case 'Group quick':
-      case 'Interrupted quick':
+      case 'group-quick':
+      case 'interrupted-quick':
         return true
     }
   }
@@ -49,29 +49,28 @@ export class QuickComponent implements OnInit {
   getModeAbbreviation(color, periodLength) {
     const getColorCharacter = () => {
       switch (color) {
-        case 'LED':
-        case 'White':
+        case 'led':
+        case 'white':
           return 'W'
-        case 'Red':
+        case 'red':
           return 'R'
-        case 'Green':
+        case 'green':
           return 'G'
       }
     }
 
     switch(this.selectedQuickMode) {
-      case 'Continuous quick':
+      case 'continuous-quick':
         return `Q ${getColorCharacter()}`
-      case 'Group quick':
+      case 'group-quick':
         return `Q(${this.groupSize}) ${getColorCharacter()} ${periodLength}s`
-      case 'Interrupted quick':
+      case 'interrupted-quick':
         return `I.Q ${getColorCharacter()} ${periodLength}s`
     }
   }
 
-  onQuickModeChange(event) {
-    this.selectedQuickMode = event.detail.value
-    if (this.selectedQuickMode == 'Interrupted quick') {
+  onQuickModeChange() {
+    if (this.selectedQuickMode == 'interrupted-quick') {
       this.periodLengthMin.emit(8)
     }
     this.settingsChanged.emit()
@@ -88,13 +87,13 @@ export class QuickComponent implements OnInit {
 
   start() {
     switch (this.selectedQuickMode) {
-      case 'Continuous quick':
+      case 'continuous-quick':
         this.continuousQuick()
         break
-      case 'Group quick':
+      case 'group-quick':
         this.groupQuick()
         break
-      case 'Interrupted quick':
+      case 'interrupted-quick':
         this.interruptedQuick()
         break
     }

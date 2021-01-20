@@ -16,13 +16,16 @@ import { CardinalMarksComponent } from '../cardinal-marks/cardinal-marks.compone
 
 import { HomePageRoutingModule } from './home-routing.module';
 
+import { TranslateModule } from '@ngx-translate/core';
+
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    HomePageRoutingModule
+    HomePageRoutingModule,
+    TranslateModule.forChild()
   ],
   declarations: [
     HomePage,

@@ -15,7 +15,7 @@ export class FlashingComponent implements OnInit {
 
   @Input() periodLength
 
-  flashingModes: String[] = ['Single-flashing', 'Long-flashing', 'Group-flashing', 'Composite group-flashing']
+  flashingModes: String[] = ['single-flashing', 'long-flashing', 'group-flashing', 'composite-group-flashing']
   selectedFlashingMode: String
   groupSize: number
   compositeGroupSize: number
@@ -30,11 +30,11 @@ export class FlashingComponent implements OnInit {
 
   isGroupSizeVisible() {
     switch (this.selectedFlashingMode) {
-      case 'Single-flashing':
-      case 'Long-flashing':
+      case 'single-flashing':
+      case 'long-flashing':
         return false
-      case 'Group-flashing':
-      case 'Composite group-flashing':
+      case 'group-flashing':
+      case 'composite-group-flashing':
         return true
     }
   }
@@ -42,35 +42,34 @@ export class FlashingComponent implements OnInit {
   getModeAbbreviation(color, periodLength) {
     const getColorCharacter = () => {
       switch (color) {
-        case 'LED':
-        case 'White':
+        case 'led':
+        case 'white':
           return 'W'
-        case 'Red':
+        case 'red':
           return 'R'
-        case 'Green':
+        case 'green':
           return 'G'
       }
     }
 
     switch(this.selectedFlashingMode) {
-      case 'Single-flashing':
+      case 'single-flashing':
         return `Fl ${getColorCharacter()} ${periodLength}s`
-      case 'Long-flashing':
+      case 'long-flashing':
         return `L.Fl ${getColorCharacter()} ${periodLength}s`
-      case 'Group-flashing':
+      case 'group-flashing':
         return `Fl(${this.groupSize}) ${getColorCharacter()} ${periodLength}s`
-      case 'Composite group-flashing':
+      case 'composite-group-flashing':
         return `Fl(${this.groupSize}+${this.compositeGroupSize}) ${getColorCharacter()} ${periodLength}s`
     }
   }
 
-  onFlashingModeChange(event) {
-    this.selectedFlashingMode = event.detail.value
+  onFlashingModeChange() {
     switch (this.selectedFlashingMode) {
-      case 'Single-flashing':
+      case 'single-flashing':
         this.periodLengthMin.emit(2)
         break
-      case 'Long-flashing':
+      case 'long-flashing':
         this.periodLengthMin.emit(5)
     }
     this.settingsChanged.emit()
@@ -80,7 +79,7 @@ export class FlashingComponent implements OnInit {
     this.groupSize = event.detail.value
     // Minimum period length should be group size + 3, to leave at least 3 seconds of darkness before the group starts
     // again. If composite group flashing is selected, additional time should be added
-    if(this.selectedFlashingMode == 'Group-flashing') {
+    if(this.selectedFlashingMode == 'group-flashing') {
       this.periodLengthMin.emit(this.groupSize + 3)
     } else {
       this.periodLengthMin.emit(this.groupSize + this.compositeGroupSize + 5)
@@ -98,16 +97,16 @@ export class FlashingComponent implements OnInit {
 
   start() {
     switch (this.selectedFlashingMode) {
-      case 'Single-flashing':
+      case 'single-flashing':
         this.singleFlashing()
         break
-      case 'Long-flashing':
+      case 'long-flashing':
         this.longFlashing()
         break
-      case 'Group-flashing':
+      case 'group-flashing':
         this.groupFlashing()
         break
-      case 'Composite group-flashing':
+      case 'composite-group-flashing':
         this.compositeGroupFlashing()
         break
     }

@@ -10,15 +10,15 @@ export class ColorModeComponent implements OnInit {
   colorModes: String[]
   selectedColorMode: String
 
-  @Output() colorChange = new EventEmitter<String>();
+  @Output() colorChange = new EventEmitter();
 
   constructor(
     private platform: Platform
   ) {
     if (this.platform.is('capacitor')) {
-      this.colorModes = ['LED', 'White', 'Green', 'Red']
+      this.colorModes = ['led', 'white', 'green', 'red']
     } else {
-      this.colorModes = ['White', 'Green', 'Red']
+      this.colorModes = ['white', 'green', 'red']
     }
 
     this.selectedColorMode = this.colorModes[0]
@@ -26,8 +26,7 @@ export class ColorModeComponent implements OnInit {
 
   ngOnInit() {}
 
-  onColorModeChange(event) {
-    this.selectedColorMode = event.detail.value
-    this.colorChange.emit(event.detail.value)
+  onColorModeChange() {
+    this.colorChange.emit()
   }
 }

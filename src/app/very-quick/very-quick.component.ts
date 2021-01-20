@@ -15,7 +15,7 @@ export class VeryQuickComponent implements OnInit {
 
   @Input() periodLength
 
-  veryQuickModes: String[] = ['Continuous very quick', 'Group very quick', 'Interrupted very quick']
+  veryQuickModes: String[] = ['continuous-very-quick', 'group-very-quick', 'interrupted-very-quick']
   selectedVeryQuickMode: String
   groupSize: number
 
@@ -28,20 +28,20 @@ export class VeryQuickComponent implements OnInit {
 
   isGroupSizeVisible() {
     switch (this.selectedVeryQuickMode) {
-      case 'Continuous very quick':
-      case 'Interrupted very quick':
+      case 'continuous-very-quick':
+      case 'interrupted-very-quick':
         return false
-      case 'Group very quick':
+      case 'group-very-quick':
         return true
     }
   }
 
   isPeriodLengthVisible() {
     switch (this.selectedVeryQuickMode) {
-      case 'Continuous very quick':
+      case 'continuous-very-quick':
         return false
-      case 'Group very quick':
-      case 'Interrupted very quick':
+      case 'group-very-quick':
+      case 'interrupted-very-quick':
         return true
     }
   }
@@ -49,29 +49,28 @@ export class VeryQuickComponent implements OnInit {
   getModeAbbreviation(color, periodLength) {
     const getColorCharacter = () => {
       switch (color) {
-        case 'LED':
-        case 'White':
+        case 'led':
+        case 'white':
           return 'W'
-        case 'Red':
+        case 'red':
           return 'R'
-        case 'Green':
+        case 'green':
           return 'G'
       }
     }
 
     switch(this.selectedVeryQuickMode) {
-      case 'Continuous very quick':
+      case 'continuous-very-quick':
         return `VQ ${getColorCharacter()}`
-      case 'Group very quick':
+      case 'group-very-quick':
         return `VQ(${this.groupSize}) ${getColorCharacter()} ${periodLength}s`
-      case 'Interrupted very quick':
+      case 'interrupted-very-quick':
         return `I.VQ ${getColorCharacter()} ${periodLength}s`
     }
   }
 
-  onVeryQuickModeChange(event) {
-    this.selectedVeryQuickMode = event.detail.value
-    if (this.selectedVeryQuickMode == 'Interrupted very quick') {
+  onVeryQuickModeChange() {
+    if (this.selectedVeryQuickMode == 'interrupted-very-quick') {
       this.periodLengthMin.emit(8)
     }
     this.settingsChanged.emit()
@@ -88,13 +87,13 @@ export class VeryQuickComponent implements OnInit {
 
   start() {
     switch (this.selectedVeryQuickMode) {
-      case 'Continuous very quick':
+      case 'continuous-very-quick':
         this.continuousVeryQuick()
         break
-      case 'Group very quick':
+      case 'group-very-quick':
         this.groupVeryQuick()
         break
-      case 'Interrupted very quick':
+      case 'interrupted-very-quick':
         this.interruptedVeryQuick()
         break
     }

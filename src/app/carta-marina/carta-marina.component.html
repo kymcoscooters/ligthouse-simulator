@@ -1,6 +1,6 @@
 <ion-item color="medium">
-  <ion-label>Carta Marina light</ion-label>
-  <ion-select interface="action-sheet" value="{{cartaMarinaLights[0]}}" (ionChange)="onCartaMarinaLightChange($event)">
+  <ion-label>{{ 'carta-marina-light' | translate }}</ion-label>
+  <ion-select interface="action-sheet" value="{{cartaMarinaLights[0]}}" cancelText="{{ 'cancel' | translate }}" (ionChange)="onCartaMarinaLightChange($event)">
     <ion-select-option *ngFor="let light of cartaMarinaLights">{{light}}</ion-select-option>
   </ion-select>
 </ion-item>
