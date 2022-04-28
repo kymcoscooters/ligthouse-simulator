@@ -15,8 +15,8 @@ export class OccultingComponent implements OnInit {
 
   @Input() periodLength
 
-  occultingModes: String[] = ['single-occulting', 'group-occulting', 'composite-group-occulting']
-  selectedOccultingMode: String
+  occultingModes: string[] = ['single-occulting', 'group-occulting', 'composite-group-occulting']
+  selectedOccultingMode: string
   groupSize: number
   compositeGroupSize: number
 
@@ -90,86 +90,99 @@ export class OccultingComponent implements OnInit {
     this.settingsChanged.emit()
   }
 
-  start() {
+  start(sequenceId) {
     switch (this.selectedOccultingMode) {
       case 'single-occulting':
-        this.singleOcculting()
+        this.singleOcculting(sequenceId)
         break
       case 'group-occulting':
-        this.groupOcculting()
+        this.groupOcculting(sequenceId)
         break
       case 'composite-group-occulting':
-        this.compositeGroupOcculting()
+        this.compositeGroupOcculting(sequenceId)
         break
     }
   }
 
-  singleOcculting() {
+  singleOcculting(sequenceId) {
     const period = this.periodLength * 1000
 
-    this.turnOff.emit()
+    this.turnOff.emit(sequenceId)
 
-    const off = setInterval(() => {
-      this.turnOff.emit()
-    }, period)
+    this.intervals.emit([
+      setInterval(() => {
+        this.turnOff.emit(sequenceId)
+      }, period),
+      sequenceId
+    ])
 
     setTimeout(() => {
-      this.turnOn.emit()
-      const on = setInterval(() => {
-        this.turnOn.emit()
-      }, period)
-      this.intervals.emit([on, off])
+      this.turnOn.emit(sequenceId)
+      this.intervals.emit([
+        setInterval(() => {
+          this.turnOn.emit(sequenceId)
+        }, period),
+        sequenceId
+      ])
     }, 500)
   }
 
-  groupOcculting() {
-    let intervals = []
+  groupOcculting(sequenceId) {
     let time = 0
     const period = this.periodLength * 1000
 
     for (let i = 0; i < this.groupSize; i++) {
       setTimeout(() => {
-        this.turnOff.emit()
-        intervals.push(setInterval(() => {
-          this.turnOff.emit()
-        }, period))
+        this.turnOff.emit(sequenceId)
+        this.intervals.emit([
+          setInterval(() => {
+            this.turnOff.emit(sequenceId)
+          }, period),
+          sequenceId
+        ])
       }, time)
 
       time += 500
 
       setTimeout(() => {
-        this.turnOn.emit()
-        intervals.push(setInterval(() => {
-          this.turnOn.emit()
-        }, period))
+        this.turnOn.emit(sequenceId)
+        this.intervals.emit([
+          setInterval(() => {
+            this.turnOn.emit(sequenceId)
+          }, period),
+          sequenceId
+        ])
       }, time)
 
       time += 500
     }
-
-    this.intervals.emit(intervals)
   }
 
-  compositeGroupOcculting() {
-    let intervals = []
+  compositeGroupOcculting(sequenceId) {
     let time = 0
     const period = this.periodLength * 1000
 
     for (let i = 0; i < this.groupSize; i++) {
       setTimeout(() => {
-        this.turnOff.emit()
-        intervals.push(setInterval(() => {
-          this.turnOff.emit()
-        }, period))
+        this.turnOff.emit(sequenceId)
+        this.intervals.emit([
+          setInterval(() => {
+            this.turnOff.emit(sequenceId)
+          }, period),
+          sequenceId
+        ])
       }, time)
 
       time += 500
 
       setTimeout(() => {
-        this.turnOn.emit()
-        intervals.push(setInterval(() => {
-          this.turnOn.emit()
-        }, period))
+        this.turnOn.emit(sequenceId)
+        this.intervals.emit([
+          setInterval(() => {
+            this.turnOn.emit(sequenceId)
+          }, period),
+          sequenceId
+        ])
       }, time)
 
       time += 500
@@ -179,25 +192,29 @@ export class OccultingComponent implements OnInit {
 
     for (let j = 0; j < this.compositeGroupSize; j++) {
       setTimeout(() => {
-        this.turnOff.emit()
-        intervals.push(setInterval(() => {
-          this.turnOff.emit()
-        }, period))
+        this.turnOff.emit(sequenceId)
+        this.intervals.emit([
+          setInterval(() => {
+            this.turnOff.emit(sequenceId)
+          }, period),
+          sequenceId
+        ])
       }, time)
 
       time += 500
 
       setTimeout(() => {
-        this.turnOn.emit()
-        intervals.push(setInterval(() => {
-          this.turnOn.emit()
-        }, period))
+        this.turnOn.emit(sequenceId)
+        this.intervals.emit([
+          setInterval(() => {
+            this.turnOn.emit(sequenceId)
+          }, period),
+          sequenceId
+        ])
       }, time)
 
       time += 500
     }
-
-    this.intervals.emit(intervals)
   }
 
 }

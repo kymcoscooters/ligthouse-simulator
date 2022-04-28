@@ -12,7 +12,7 @@
 </ion-item>
 <ion-item color="medium" #groupSizeContainer *ngIf="isGroupSizeVisible()">
   <ion-range color="light" min="2" max="10" step="1" [(ngModel)]="groupSize" (ionChange)="onGroupSizeChange($event)" #groupSizeSlider>
-    <ion-label slot="start">{{ grou-size | translate }}</ion-label>
+    <ion-label slot="start">{{ 'group-size' | translate }}</ion-label>
     <ion-label slot="end">{{groupSize}}</ion-label>
   </ion-range>
 </ion-item>

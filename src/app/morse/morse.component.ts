@@ -46,7 +46,7 @@ export class MorseComponent implements OnInit {
     Z: '1100'
   }
 
-  selectedMorseLetter
+  selectedMorseLetter: string
 
   constructor() {
     this.selectedMorseLetter = Object.keys(this.morseLetters)[0]
@@ -76,22 +76,24 @@ export class MorseComponent implements OnInit {
     this.settingsChanged.emit()
   }
 
-  start() {
-    this.morse()
+  start(sequenceId) {
+    this.morse(sequenceId)
   }
 
-  morse() {
-    let intervals = []
+  morse(sequenceId) {
     let time = 0
     const period = this.periodLength * 1000
     const letter = this.morseLetters[this.selectedMorseLetter]
 
     for (let i = 0; i < letter.length; i++) {
       setTimeout(() => {
-        this.turnOn.emit()
-        intervals.push(setInterval(() => {
-          this.turnOn.emit()
-        }, period))
+        this.turnOn.emit(sequenceId)
+        this.intervals.emit([
+          setInterval(() => {
+            this.turnOn.emit(sequenceId)
+          }, period),
+          sequenceId
+        ])
       }, time)
 
       if (letter[i] == '0') {
@@ -101,15 +103,16 @@ export class MorseComponent implements OnInit {
       }
 
       setTimeout(() => {
-        this.turnOff.emit()
-        intervals.push(setInterval(() => {
-          this.turnOff.emit()
-        }, period))
+        this.turnOff.emit(sequenceId)
+        this.intervals.emit([
+          setInterval(() => {
+            this.turnOff.emit(sequenceId)
+          }, period),
+          sequenceId
+        ])
       }, time)
 
       time += 200
     }
-
-    this.intervals.emit(intervals)
   }
 }

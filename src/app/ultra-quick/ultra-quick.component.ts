@@ -15,8 +15,8 @@ export class UltraQuickComponent implements OnInit {
 
   @Input() periodLength
 
-  ultraQuickModes: String[] = ['continuous-ultra-quick', 'interrupted-ultra-quick']
-  selectedUltraQuickMode: String
+  ultraQuickModes: string[] = ['continuous-ultra-quick', 'interrupted-ultra-quick']
+  selectedUltraQuickMode: string
 
   constructor() {
     this.selectedUltraQuickMode = this.ultraQuickModes[0]
@@ -61,61 +61,69 @@ export class UltraQuickComponent implements OnInit {
     this.settingsChanged.emit()
   }
 
-  start() {
+  start(sequenceId) {
     switch (this.selectedUltraQuickMode) {
       case 'continuous-ultra-quick':
-        this.continuousUltraQuick()
+        this.continuousUltraQuick(sequenceId)
         break
       case 'interrupted-ultra-quick':
-        this.interruptedUltraQuick()
+        this.interruptedUltraQuick(sequenceId)
         break
     }
   }
 
-  continuousUltraQuick() {
+  continuousUltraQuick(sequenceId) {
     const period = 250
 
-    this.turnOn.emit()
+    this.turnOn.emit(sequenceId)
 
-    const on = setInterval(() => {
-      this.turnOn.emit()
-    }, period)
+    this.intervals.emit([
+      setInterval(() => {
+        this.turnOn.emit(sequenceId)
+      }, period),
+      sequenceId
+    ])
 
     setTimeout(() => {
-      this.turnOff.emit()
-      const off = setInterval(() => {
-        this.turnOff.emit()
-      }, period)
-      this.intervals.emit([on, off])
+      this.turnOff.emit(sequenceId)
+      this.intervals.emit([
+        setInterval(() => {
+          this.turnOff.emit(sequenceId)
+        }, period),
+        sequenceId
+      ])
     }, 100)
   }
 
-  interruptedUltraQuick() {
-    let intervals = []
+  interruptedUltraQuick(sequenceId) {
     let time = 0
     const period = this.periodLength * 1000
     const onPeriod = this.periodLength * (2/3) * 1000
 
     for (time; time < onPeriod; time) {
       setTimeout(() => {
-        this.turnOn.emit()
-        intervals.push(setInterval(() => {
-          this.turnOn.emit()
-        }, period))
+        this.turnOn.emit(sequenceId)
+        this.intervals.emit([
+          setInterval(() => {
+            this.turnOn.emit(sequenceId)
+          }, period),
+          sequenceId
+        ])
       }, time)
 
       time += 100
 
       setTimeout(() => {
-        this.turnOff.emit()
-        intervals.push(setInterval(() => {
-          this.turnOff.emit()
-        }, period))
+        this.turnOff.emit(sequenceId)
+        this.intervals.emit([
+          setInterval(() => {
+            this.turnOff.emit(sequenceId)
+          }, period),
+          sequenceId
+        ])
       }, time)
 
       time += 150
     }
-
-    this.intervals.emit(intervals)
   }
 }

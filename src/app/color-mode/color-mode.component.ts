@@ -7,8 +7,8 @@ import { Platform } from '@ionic/angular';
   styleUrls: ['./color-mode.component.scss'],
 })
 export class ColorModeComponent implements OnInit {
-  colorModes: String[]
-  selectedColorMode: String
+  colorModes: string[]
+  selectedColorMode: string
 
   @Output() colorChange = new EventEmitter();
 

@@ -14,8 +14,8 @@ import { VeryQuickComponent } from '../very-quick/very-quick.component';
   styleUrls: ['./light-mode.component.scss'],
 })
 export class LightModeComponent implements OnInit {
-  lightModes: String[]
-  selectedLightMode: String
+  lightModes: string[]
+  selectedLightMode: string
   periodLength: number
   periodLengthVisible: boolean
 
@@ -35,7 +35,7 @@ export class LightModeComponent implements OnInit {
   @Output() settingsChanged = new EventEmitter()
 
   constructor() {
-    this.lightModes = [
+    this.lightModes = [
       'fixed',
       'flashing',
       'isophase',
@@ -67,12 +67,12 @@ export class LightModeComponent implements OnInit {
     this.onSettingsChanged()
   }
 
-  emitTurnOn() {
-    this.turnOn.emit()
+  emitTurnOn(sequenceId) {
+    this.turnOn.emit(sequenceId)
   }
 
-  emitTurnOff() {
-    this.turnOff.emit()
+  emitTurnOff(sequenceId) {
+    this.turnOff.emit(sequenceId)
   }
 
   setIntervals(intervals) {
@@ -84,54 +84,61 @@ export class LightModeComponent implements OnInit {
     this.periodLengthVisible = this.isPeriodLengthVisible()
   }
 
-  start() {
+  start(sequenceId) {
     switch (this.selectedLightMode) {
       case 'fixed':
-        this.emitTurnOn()
+        this.emitTurnOn(sequenceId)
         break
       case 'flashing':
-        this.flashingComponent.start()
+        this.flashingComponent.start(sequenceId)
         break
       case 'isophase':
-        this.isophase()
+        this.isophase(sequenceId)
         break
       case 'occulting':
-        this.occultingComponent.start()
+        this.occultingComponent.start(sequenceId)
         break
       case 'quick':
-        this.quickComponent.start()
+        this.quickComponent.start(sequenceId)
         break
       case 'very-quick':
-        this.veryQuickComponent.start()
+        this.veryQuickComponent.start(sequenceId)
         break
       case 'ultra-quick':
-        this.ultraQuickcomponent.start()
+        this.ultraQuickcomponent.start(sequenceId)
         break
       case 'morse':
-        this.morseComponent.start()
+        this.morseComponent.start(sequenceId)
         break
       case 'carta-marina':
-        this.cartaMarinaComponent.start()
+        this.cartaMarinaComponent.start(sequenceId)
+        break
       case 'cardinal-marks':
-        this.cardinalMarksComponent.start()
+        this.cardinalMarksComponent.start(sequenceId)
+        break
     }
   }
 
-  isophase() {
+  isophase(sequenceId) {
     const period = this.periodLength * 1000
 
-    this.emitTurnOn()
+    this.emitTurnOn(sequenceId)
 
-    const on = setInterval(() => {
-      this.emitTurnOn()
-    }, period)
+    this.setIntervals([
+      setInterval(() => {
+        this.emitTurnOn(sequenceId)
+      }, period),
+      sequenceId
+    ])
 
     setTimeout(() => {
-      this.emitTurnOff()
-      const off = setInterval(() => {
-        this.emitTurnOff()
-      }, period)
-      this.setIntervals([on, off])
+      this.emitTurnOff(sequenceId)
+      this.setIntervals([
+        setInterval(() => {
+          this.emitTurnOff(sequenceId)
+        }, period),
+        sequenceId
+      ])
     }, period/2)
   }
 

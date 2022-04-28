@@ -27,4 +27,8 @@ export class AppComponent {
       this.translate.use('en')
     });
   }
+
+  useLang(lang) {
+    this.translate.use(lang)
+  }
 }

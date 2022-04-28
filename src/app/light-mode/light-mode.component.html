@@ -18,8 +18,8 @@
 </ion-item>
 <lsim-flashing
   [hidden]="selectedLightMode != 'flashing'"
-  (turnOn)="emitTurnOn()"
-  (turnOff)="emitTurnOff()"
+  (turnOn)="emitTurnOn($event)"
+  (turnOff)="emitTurnOff($event)"
   (intervals)="setIntervals($event)"
   (settingsChanged)="onSettingsChanged()"
   (periodLengthMin)="setPeriodLengthMin($event)"
@@ -27,8 +27,8 @@
 ></lsim-flashing>
 <lsim-occulting
   [hidden]="selectedLightMode != 'occulting'"
-  (turnOn)="emitTurnOn()"
-  (turnOff)="emitTurnOff()"
+  (turnOn)="emitTurnOn($event)"
+  (turnOff)="emitTurnOff($event)"
   (intervals)="setIntervals($event)"
   (settingsChanged)="onSettingsChanged()"
   (periodLengthMin)="setPeriodLengthMin($event)"
@@ -36,8 +36,8 @@
 ></lsim-occulting>
 <lsim-quick
   [hidden]="selectedLightMode != 'quick'"
-  (turnOn)="emitTurnOn()"
-  (turnOff)="emitTurnOff()"
+  (turnOn)="emitTurnOn($event)"
+  (turnOff)="emitTurnOff($event)"
   (intervals)="setIntervals($event)"
   (settingsChanged)="onSettingsChanged()"
   (periodLengthMin)="setPeriodLengthMin($event)"
@@ -45,8 +45,8 @@
 ></lsim-quick>
 <lsim-very-quick
   [hidden]="selectedLightMode != 'very-quick'"
-  (turnOn)="emitTurnOn()"
-  (turnOff)="emitTurnOff()"
+  (turnOn)="emitTurnOn($event)"
+  (turnOff)="emitTurnOff($event)"
   (intervals)="setIntervals($event)"
   (settingsChanged)="onSettingsChanged()"
   (periodLengthMin)="setPeriodLengthMin($event)"
@@ -54,8 +54,8 @@
 ></lsim-very-quick>
 <lsim-ultra-quick
   [hidden]="selectedLightMode != 'ultra-quick'"
-  (turnOn)="emitTurnOn()"
-  (turnOff)="emitTurnOff()"
+  (turnOn)="emitTurnOn($event)"
+  (turnOff)="emitTurnOff($event)"
   (intervals)="setIntervals($event)"
   (settingsChanged)="onSettingsChanged()"
   (periodLengthMin)="setPeriodLengthMin($event)"
@@ -63,8 +63,8 @@
 ></lsim-ultra-quick>
 <lsim-morse
   [hidden]="selectedLightMode != 'morse'"
-  (turnOn)="emitTurnOn()"
-  (turnOff)="emitTurnOff()"
+  (turnOn)="emitTurnOn($event)"
+  (turnOff)="emitTurnOff($event)"
   (intervals)="setIntervals($event)"
   (settingsChanged)="onSettingsChanged()"
   (periodLengthMin)="setPeriodLengthMin($event)"
@@ -72,15 +72,15 @@
 ></lsim-morse>
 <lsim-carta-marina
   [hidden]="selectedLightMode != 'carta-marina'"
-  (turnOn)="emitTurnOn()"
-  (turnOff)="emitTurnOff()"
+  (turnOn)="emitTurnOn($event)"
+  (turnOff)="emitTurnOff($event)"
   (intervals)="setIntervals($event)"
   (settingsChanged)="onSettingsChanged()"
 ></lsim-carta-marina>
 <lsim-cardinal-marks
   [hidden]="selectedLightMode != 'cardinal-marks'"
-  (turnOn)="emitTurnOn()"
-  (turnOff)="emitTurnOff()"
+  (turnOn)="emitTurnOn($event)"
+  (turnOff)="emitTurnOff($event)"
   (intervals)="setIntervals($event)"
   (settingsChanged)="onSettingsChanged()"
 ></lsim-cardinal-marks>

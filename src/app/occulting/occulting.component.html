@@ -16,7 +16,7 @@
     <ion-label slot="end">{{groupSize}}</ion-label>
   </ion-range>
 </ion-item>
-<ion-item color="medium" #compositeGroupSizeContainer *ngIf="selectedOccultingMode == 'Composite group-occulting'">
+<ion-item color="medium" #compositeGroupSizeContainer *ngIf="selectedOccultingMode == 'composite-group-occulting'">
   <ion-range color="light" min="1" max="10" step="1" [(ngModel)]="compositeGroupSize" (ionChange)="onCompositeGroupSizeChange($event)" #compositeGroupSizeSlider>
     <ion-label slot="start">{{ 'composite-group-size' | translate }}</ion-label>
     <ion-label slot="end">{{compositeGroupSize}}</ion-label>

@@ -14,11 +14,12 @@ export class HomePage {
   flashlight = new Flashlight();
 
   flashProm
-  intervals
+  intervals = []
   cancel
   running
   modeAbbreviation = 'F W'
   lang
+  currentlyRunning = 0
 
   @ViewChild('content') content: ElementRef
   @ViewChild('footerBar') footerBar
@@ -46,16 +47,16 @@ export class HomePage {
           child.classList.add('hidden')
         }
       }
+
+      this.currentlyRunning++
       
-      this.lightMode.start()
+      this.lightMode.start(this.currentlyRunning)
 
       cancel = () => {
         if (finished) {
           return
         }
         this.clearIntervals()
-        this.turnOff()
-        this.content.nativeElement.classList.remove('black')
         this.showHiddenItems()
         resolve()
       }
@@ -77,37 +78,45 @@ export class HomePage {
     return { promise, cancel }
   }
 
-  cancelFlash() {
-    this.flashProm.cancel()
-    this.flashProm = undefined
-  }
-
-  turnOn() {
-    if (this.colorMode.selectedColorMode != 'led') {
-      this.content.nativeElement.classList.add(this.colorMode.selectedColorMode)
-      this.content.nativeElement.classList.remove('black')
-    } else {
-      this.flashlight.switchOn()
+  turnOn(sequenceId) {
+    if (sequenceId == this.currentlyRunning && this.running) {
+      if (this.colorMode.selectedColorMode != 'led') {
+        this.content.nativeElement.classList.add(this.colorMode.selectedColorMode)
+        this.content.nativeElement.classList.remove('black')
+      } else {
+        this.flashlight.switchOn()
+      }
     }
   }
 
-  turnOff() {
-    if (this.colorMode.selectedColorMode != 'led') {
-      this.content.nativeElement.classList.remove(this.colorMode.selectedColorMode)
-      this.content.nativeElement.classList.add('black')
-    } else {
-      this.flashlight.switchOff()
+  turnOff(sequenceId, override = false) {
+    if (sequenceId == this.currentlyRunning && (this.running || override)) {
+      if (this.colorMode.selectedColorMode != 'led') {
+        this.content.nativeElement.classList.remove(this.colorMode.selectedColorMode)
+        this.content.nativeElement.classList.add('black')
+      } else {
+        this.flashlight.switchOff()
+      }
     }
   }
 
-  setIntervals(event) {
-    this.intervals = event
+  setIntervals(interval) {
+    const intervalId = interval[0]
+    const sequenceId = interval[1]
+    if (sequenceId == this.currentlyRunning && this.running) {
+      this.intervals.push(intervalId)
+    } else {
+      clearInterval(intervalId)
+    }
   }
 
   clearIntervals() {
     this.intervals?.forEach((id) => {
       clearInterval(id)
     })
+    this.intervals = []
+    this.turnOff(this.currentlyRunning, true)
+    this.content.nativeElement.classList.remove('black')
   }
 
   showHiddenItems() {

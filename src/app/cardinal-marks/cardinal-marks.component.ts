@@ -12,7 +12,7 @@ export class CardinalMarksComponent implements OnInit {
   @Output() intervals = new EventEmitter()
   @Output() settingsChanged = new EventEmitter()
 
-  cardinalMarks = ['north', 'east', 'south', 'west']
+  cardinalMarks: string[] = ['north', 'east', 'south', 'west']
 
   selectedCardinalMark: string
 
@@ -51,111 +51,128 @@ export class CardinalMarksComponent implements OnInit {
     this.settingsChanged.emit()
   }
 
-  start() {
+  start(sequenceId) {
     switch(this.selectedCardinalMark) {
       case 'north':
-        this.north()
+        this.north(sequenceId)
         break
       case 'east':
-        this.groupQuick(6, 3)
+        this.groupQuick(6, 3, sequenceId)
         break
       case 'south':
-        this.south()
+        this.south(sequenceId)
         break
       case 'west':
-        this.groupQuick(12, 9)
+        this.groupQuick(12, 9, sequenceId)
     }
   }
 
-  north() {
+  north(sequenceId) {
     const period = 1050
 
-    this.turnOn.emit()
+    this.turnOn.emit(sequenceId)
 
-    const on = setInterval(() => {
-      this.turnOn.emit()
-    }, period)
+    this.intervals.emit([
+      setInterval(() => {
+        this.turnOn.emit(sequenceId)
+      }, period),
+      sequenceId
+    ])
 
     setTimeout(() => {
-      this.turnOff.emit()
-      const off = setInterval(() => {
-        this.turnOff.emit()
-      }, period)
-      this.intervals.emit([on, off])
+      this.turnOff.emit(sequenceId)
+      this.intervals.emit([
+        setInterval(() => {
+          this.turnOff.emit(sequenceId)
+        }, period),
+        sequenceId
+      ])
     }, 450)
   }
 
-  south() {
-    let intervals = []
+  south(sequenceId) {
     let time = 0
     const period = 12000
     const groupSize = 6
 
     for (let i = 0; i < groupSize; i++) {
       setTimeout(() => {
-        this.turnOn.emit()
-        intervals.push(setInterval(() => {
-          this.turnOn.emit()
-        }, period))
+        this.turnOn.emit(sequenceId)
+        this.intervals.emit([
+          setInterval(() => {
+            this.turnOn.emit(sequenceId)
+          }, period),
+          sequenceId
+        ])
       }, time)
 
       time += 450
 
       setTimeout(() => {
-        this.turnOff.emit()
-        intervals.push(setInterval(() => {
-          this.turnOff.emit()
-        }, period))
+        this.turnOff.emit(sequenceId)
+        this.intervals.emit([
+          setInterval(() => {
+            this.turnOff.emit(sequenceId)
+          }, period),
+          sequenceId
+        ])
       }, time)
 
       time += 450
     }
 
     setTimeout(() => {
-      this.turnOn.emit()
-      intervals.push(setInterval(() => {
-        this.turnOn.emit()
-      }, period))
+      this.turnOn.emit(sequenceId)
+      this.intervals.emit([
+        setInterval(() => {
+          this.turnOn.emit(sequenceId)
+        }, period),
+        sequenceId
+      ])
     }, time)
 
     time += 2000
 
     setTimeout(() => {
-      this.turnOff.emit()
-      intervals.push(setInterval(() => {
-        this.turnOff.emit()
-      }, period))
+      this.turnOff.emit(sequenceId)
+      this.intervals.emit([
+        setInterval(() => {
+          this.turnOff.emit(sequenceId)
+        }, period),
+        sequenceId
+      ])
     }, time)
-
-    this.intervals.emit(intervals)
   }
 
-  groupQuick(periodLength, groupSize) {
-    let intervals = []
+  groupQuick(periodLength, groupSize, sequenceId) {
     let time = 0
     const period = periodLength * 1000
 
     for (let i = 0; i < groupSize; i++) {
       setTimeout(() => {
-        this.turnOn.emit()
-        intervals.push(setInterval(() => {
-          this.turnOn.emit()
-        }, period))
+        this.turnOn.emit(sequenceId)
+        this.intervals.emit([
+          setInterval(() => {
+            this.turnOn.emit(sequenceId)
+          }, period),
+          sequenceId
+        ])
       }, time)
 
       time += 450
 
       setTimeout(() => {
-        this.turnOff.emit()
-        intervals.push(setInterval(() => {
-          this.turnOff.emit()
-        }, period))
+        this.turnOff.emit(sequenceId)
+        this.intervals.emit([
+          setInterval(() => {
+            this.turnOff.emit(sequenceId)
+          }, period),
+          sequenceId
+        ])
       }, time)
 
       time += 450
     }
-
-    this.intervals.emit(intervals)
   }
 
 }

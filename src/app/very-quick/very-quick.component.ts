@@ -15,8 +15,8 @@ export class VeryQuickComponent implements OnInit {
 
   @Input() periodLength
 
-  veryQuickModes: String[] = ['continuous-very-quick', 'group-very-quick', 'interrupted-very-quick']
-  selectedVeryQuickMode: String
+  veryQuickModes: string[] = ['continuous-very-quick', 'group-very-quick', 'interrupted-very-quick']
+  selectedVeryQuickMode: string
   groupSize: number
 
   constructor() {
@@ -85,93 +85,104 @@ export class VeryQuickComponent implements OnInit {
     this.settingsChanged.emit()
   }
 
-  start() {
+  start(sequenceId) {
     switch (this.selectedVeryQuickMode) {
       case 'continuous-very-quick':
-        this.continuousVeryQuick()
+        this.continuousVeryQuick(sequenceId)
         break
       case 'group-very-quick':
-        this.groupVeryQuick()
+        this.groupVeryQuick(sequenceId)
         break
       case 'interrupted-very-quick':
-        this.interruptedVeryQuick()
+        this.interruptedVeryQuick(sequenceId)
         break
     }
   }
 
-  continuousVeryQuick() {
+  continuousVeryQuick(sequenceId) {
     const period = 500
 
-    this.turnOn.emit()
+    this.turnOn.emit(sequenceId)
 
-    const on = setInterval(() => {
-      this.turnOn.emit()
-    }, period)
+    this.intervals.emit([
+      setInterval(() => {
+        this.turnOn.emit(sequenceId)
+      }, period),
+      sequenceId
+    ])
 
     setTimeout(() => {
-      this.turnOff.emit()
-      const off = setInterval(() => {
-        this.turnOff.emit()
-      }, period)
-      this.intervals.emit([on, off])
+      this.turnOff.emit(sequenceId)
+      this.intervals.emit([
+        setInterval(() => {
+          this.turnOff.emit(sequenceId)
+        }, period),
+        sequenceId
+      ])
     }, 200)
   }
 
-  groupVeryQuick() {
-    let intervals = []
+  groupVeryQuick(sequenceId) {
     let time = 0
     const period = this.periodLength * 1000
 
     for (let i = 0; i < this.groupSize; i++) {
       setTimeout(() => {
-        this.turnOn.emit()
-        intervals.push(setInterval(() => {
-          this.turnOn.emit()
-        }, period))
+        this.turnOn.emit(sequenceId)
+        this.intervals.emit([
+          setInterval(() => {
+            this.turnOn.emit(sequenceId)
+          }, period),
+          sequenceId
+        ])
       }, time)
 
       time += 250
 
       setTimeout(() => {
-        this.turnOff.emit()
-        intervals.push(setInterval(() => {
-          this.turnOff.emit()
-        }, period))
+        this.turnOff.emit(sequenceId)
+        this.intervals.emit([
+          setInterval(() => {
+            this.turnOff.emit(sequenceId)
+          }, period),
+          sequenceId
+        ])
       }, time)
 
       time += 250
     }
-
-    this.intervals.emit(intervals)
   }
 
-  interruptedVeryQuick() {
-    let intervals = []
+  interruptedVeryQuick(sequenceId) {
     let time = 0
     const period = this.periodLength * 1000
     const onPeriod = this.periodLength * (2/3) * 1000
 
     for (time; time < onPeriod; time) {
       setTimeout(() => {
-        this.turnOn.emit()
-        intervals.push(setInterval(() => {
-          this.turnOn.emit()
-        }, period))
+        this.turnOn.emit(sequenceId)
+        this.intervals.emit([
+          setInterval(() => {
+            this.turnOn.emit(sequenceId)
+          }, period),
+          sequenceId
+        ])
       }, time)
 
       time += 200
 
       setTimeout(() => {
-        this.turnOff.emit()
-        intervals.push(setInterval(() => {
-          this.turnOff.emit()
-        }, period))
+        this.turnOff.emit(sequenceId)
+        this.intervals.emit([
+          setInterval(() => {
+            this.turnOff.emit(sequenceId)
+          }, period),
+          sequenceId
+        ])
       }, time)
 
       time += 300
     }
-
-    this.intervals.emit(intervals)
   }
 
 }

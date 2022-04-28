@@ -1,17 +1,17 @@
 <ion-app>
   <ion-router-outlet></ion-router-outlet>
   <ion-fab vertical="top" horizontal="start" slot="fixed">
-    <ion-fab-button color="medium">
+    <ion-fab-button color="medium" size="{{400 < 350 ? 'small' : null}}">
       <ion-icon name="globe-outline"></ion-icon>
     </ion-fab-button>
     <ion-fab-list side="bottom">
-      <ion-fab-button (click)="translate.use('en')">
+      <ion-fab-button (click)="useLang('en')">
         <ion-icon src="../assets/icons/united-kingdom.svg"></ion-icon>
       </ion-fab-button>
-      <ion-fab-button (click)="translate.use('sv')">
+      <ion-fab-button (click)="useLang('sv')">
         <ion-icon src="../assets/icons/sweden.svg"></ion-icon>
       </ion-fab-button>
-      <ion-fab-button (click)="translate.use('fi')">
+      <ion-fab-button (click)="useLang('fi')">
         <ion-icon src="../assets/icons/finland.svg"></ion-icon>
       </ion-fab-button>
     </ion-fab-list>

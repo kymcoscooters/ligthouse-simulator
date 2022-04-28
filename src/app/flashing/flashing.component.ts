@@ -15,8 +15,8 @@ export class FlashingComponent implements OnInit {
 
   @Input() periodLength
 
-  flashingModes: String[] = ['single-flashing', 'long-flashing', 'group-flashing', 'composite-group-flashing']
-  selectedFlashingMode: String
+  flashingModes: string[] = ['single-flashing', 'long-flashing', 'group-flashing', 'composite-group-flashing']
+  selectedFlashingMode: string
   groupSize: number
   compositeGroupSize: number
 
@@ -95,107 +95,125 @@ export class FlashingComponent implements OnInit {
     this.settingsChanged.emit()
   }
 
-  start() {
+  start(sequenceId) {
     switch (this.selectedFlashingMode) {
       case 'single-flashing':
-        this.singleFlashing()
+        this.singleFlashing(sequenceId)
         break
       case 'long-flashing':
-        this.longFlashing()
+        this.longFlashing(sequenceId)
         break
       case 'group-flashing':
-        this.groupFlashing()
+        this.groupFlashing(sequenceId)
         break
       case 'composite-group-flashing':
-        this.compositeGroupFlashing()
+        this.compositeGroupFlashing(sequenceId)
         break
     }
   }
 
-  singleFlashing() {
+  singleFlashing(sequenceId) {
     const period = this.periodLength * 1000
 
-    this.turnOn.emit()
+    this.turnOn.emit(sequenceId)
 
-    const on = setInterval(() => {
-      this.turnOn.emit()
-    }, period)
+    this.intervals.emit([
+      setInterval(() => {
+        this.turnOn.emit(sequenceId)
+      }, period),
+      sequenceId
+    ])
 
     setTimeout(() => {
-      this.turnOff.emit()
-      const off = setInterval(() => {
-        this.turnOff.emit()
-      }, period)
-      this.intervals.emit([on, off])
+      this.turnOff.emit(sequenceId)
+      this.intervals.emit([
+        setInterval(() => {
+          this.turnOff.emit(sequenceId)
+        }, period),
+        sequenceId
+      ])
     }, 500)
   }
 
-  longFlashing() {
+  longFlashing(sequenceId) {
     const period = this.periodLength * 1000
 
-    this.turnOn.emit()
+    this.turnOn.emit(sequenceId)
 
-    const on = setInterval(() => {
-      this.turnOn.emit()
-    }, period)
+    this.intervals.emit([
+      setInterval(() => {
+        this.turnOn.emit(sequenceId)
+      }, period),
+      sequenceId
+    ])
 
     setTimeout(() => {
-      this.turnOff.emit()
-      const off = setInterval(() => {
-        this.turnOff.emit()
-      }, period)
-      this.intervals.emit([on, off])
+      this.turnOff.emit(sequenceId)
+      this.intervals.emit([
+        setInterval(() => {
+        this.turnOff.emit(sequenceId)
+        }, period),
+        sequenceId
+      ])
     }, 2000)
   }
 
-  groupFlashing() {
-    let intervals = []
+  groupFlashing(sequenceId) {
     let time = 0
     const period = this.periodLength * 1000
 
     for (let i = 0; i < this.groupSize; i++) {
       setTimeout(() => {
-        this.turnOn.emit()
-        intervals.push(setInterval(() => {
-          this.turnOn.emit()
-        }, period))
+        this.turnOn.emit(sequenceId)
+        this.intervals.emit([
+          setInterval(() => {
+            this.turnOn.emit(sequenceId)
+          }, period),
+          sequenceId
+        ])
       }, time)
 
       time += 500
 
       setTimeout(() => {
-        this.turnOff.emit()
-        intervals.push(setInterval(() => {
-          this.turnOff.emit()
-        }, period))
+        this.turnOff.emit(sequenceId)
+        this.intervals.emit([
+          setInterval(() => {
+            this.turnOff.emit(sequenceId)
+          }, period),
+          sequenceId
+        ])
       }, time)
 
       time += 500
     }
-
-    this.intervals.emit(intervals)
   }
 
-  compositeGroupFlashing() {
-    let intervals = []
+  compositeGroupFlashing(sequenceId) {
     let time = 0
     const period = this.periodLength * 1000
 
     for (let i = 0; i < this.groupSize; i++) {
       setTimeout(() => {
-        this.turnOn.emit()
-        intervals.push(setInterval(() => {
-          this.turnOn.emit()
-        }, period))
+        this.turnOn.emit(sequenceId)
+        this.intervals.emit([
+          setInterval(() => {
+            this.turnOn.emit(sequenceId)
+          }, period),
+          sequenceId
+        ])
       }, time)
 
       time += 500
 
       setTimeout(() => {
-        this.turnOff.emit()
-        intervals.push(setInterval(() => {
-          this.turnOff.emit()
-        }, period))
+        this.turnOff.emit(sequenceId)
+        this.intervals.emit([
+          setInterval(() => {
+            this.turnOff.emit(sequenceId)
+          }, period),
+          sequenceId
+        ])
       }, time)
 
       time += 500
@@ -205,24 +223,28 @@ export class FlashingComponent implements OnInit {
 
     for (let j = 0; j < this.compositeGroupSize; j++) {
       setTimeout(() => {
-        this.turnOn.emit()
-        intervals.push(setInterval(() => {
-          this.turnOn.emit()
-        }, period))
+        this.turnOn.emit(sequenceId)
+        this.intervals.emit([
+          setInterval(() => {
+            this.turnOn.emit(sequenceId)
+          }, period),
+          sequenceId
+        ])
       }, time)
 
       time += 500
 
       setTimeout(() => {
-        this.turnOff.emit()
-        intervals.push(setInterval(() => {
-          this.turnOff.emit()
-        }, period))
+        this.turnOff.emit(sequenceId)
+        this.intervals.emit([
+          setInterval(() => {
+            this.turnOff.emit(sequenceId)
+          }, period),
+          sequenceId
+        ])
       }, time)
 
       time += 500
     }
-
-    this.intervals.emit(intervals)
   }
 }
